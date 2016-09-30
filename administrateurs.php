@@ -58,7 +58,7 @@
 		</thead>
 		
 		
-		<?php foreach($messages as $m): ?>
+		<?php #foreach($messages as $m): ?>
 		
 		<tbody>
 			<tr>
@@ -68,7 +68,7 @@
 				<td><a href="<?php echo 'deleteMessage.php?message_id='.$m=>message_id ?> "</td>
 			</tr>
 		</tbody>
-		<?php endforeach; ?>
+		<?php #endforeach; ?>
 	  </table>
 
       
