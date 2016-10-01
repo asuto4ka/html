@@ -1,6 +1,14 @@
+header("Content-type: text/css");
+
 h1 {
-    font-size: 200%; 
-    color: #0a079e; 
+    font-size:200%;
+    color: #0a079e;
+    text-align: center;
+}
+
+h1 {
+    font-size:200%;
+    color: #0a079e;
     text-align: center;
 }
 
@@ -40,10 +48,6 @@ h2 {
 
 .container {
     text-align: center;
-}
-
-.centre {
-   text-align:center;
 }
 
 input[type=text] {

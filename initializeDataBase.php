@@ -3,6 +3,8 @@
 <body>
 
 <?php
+   // Compatibility for php 5.4.16 to use function password_hash
+   require('password.php');
  
   // Set default timezone
   date_default_timezone_set('UTC');
@@ -19,7 +21,7 @@
     $file_db->setAttribute(PDO::ATTR_ERRMODE, 
                             PDO::ERRMODE_EXCEPTION);
 
-    echo "[DEBUG] Database stiMessenger.sqlite connected and opened ! </br>";
+    echo "[DEBUG] Database database.sqlite connected and opened ! </br>";
  
     /**************************************
     * Create tables                       *
@@ -50,20 +52,25 @@
     * Set initial data                    *
     **************************************/
  
-    // Array with some test data to insert to database             
+    // Password hash creation
+    $user1_pwd_hash = password_hash("thibault", PASSWORD_DEFAULT);  
+    $user2_pwd_hash = password_hash("sebastien", PASSWORD_DEFAULT);
+    $user3_pwd_hash = password_hash("bob", PASSWORD_DEFAULT);
+
+    // Array with some test data to insert to database
     $users = array(
                   array('user_name' => 'Thibault',
-                        'user_pwd_hash' => 'thibault',
+                        'user_pwd_hash' => $user1_pwd_hash,
                         'user_role' => 0,
                         'user_active' => 1),
 
                   array('user_name' => 'Sebastien',
-                        'user_pwd_hash' => 'sebastien',
+                        'user_pwd_hash' => $user2_pwd_hash,
                         'user_role' => 0,
                         'user_active' => 1),
 
                   array('user_name' => 'Bob',
-                        'user_pwd_hash' => 'bob',
+                        'user_pwd_hash' => $user3_pwd_hash,
                         'user_role' => 1,
                         'user_active' => 1),
 
@@ -95,7 +102,7 @@
  
  
     /**************************************
-    * Play with databases and tables      *
+    * Insertion on tables                 *
     **************************************/
  
     foreach ($users as $u) {
@@ -111,30 +118,6 @@
     }
 
     echo "[DEBUG] Tables users and messages initialized ! </br>";
-
-   // $result =  $file_db->query('SELECT * FROM users');
-   // foreach($result as $row) {
-   // echo "user_id: " . $row['user_id'] . "</br>";
-   //   echo "user_name: " . $row['user_name'] . "</br>";
-   //   echo "user_pwd_hash: " . $row['user_pwd_hash'] . "</br>";
-   //   echo "user_role: " . $row['user_role'] . "</br>";
-   //   echo "user_active: " . $row['user_active'] . "</br>";
-   //   echo "</br>";
-   // }
- 
- 
-    /**************************************
-    * Drop tables                         *
-    **************************************/
- 
-    // Drop table messages from file db
-    //$file_db->exec("DROP TABLE users");
-    //$file_db->exec("DROP TABLE messages");
-    //echo "[DEBUG] Tables dropped ! </br>";
-
-    // Remove database file
-    //unlink('/var/www/databases/database.sqlite');
-    //echo "[DEBUG] Database file removed ! </br>";
  
     /**************************************
     * Close db connections                *
@@ -151,7 +134,6 @@
   }
 
 ?>
-
 
 </body>
 </html>
