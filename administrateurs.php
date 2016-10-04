@@ -1,6 +1,6 @@
 <?php
-   session_start();
-   
+	session_start(); 
+	include("databaseConnection.php");
    
 ?>
 
@@ -30,10 +30,10 @@
 	  <table>
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Sender</th>
-				<th>Answer</th>
-				<th>Delete</th>
+				<th> Date </th>
+				<th> Sender </th>
+				<th> Answer </th>
+				<th> Delete </th>
 			</tr>
 		</thead>
 		
@@ -42,10 +42,10 @@
 		
 		<tbody>
 			<tr>
-				<td>Pute</td>
-				<td>caca</td>
-				<td>cheval</td>
-				<td>Bouton</td>
+				<td> Pute </td>
+				<td> caca </td>
+				<td> cheval </td>
+				<td> Bouton </td>
 				
 				
 			</tr>
