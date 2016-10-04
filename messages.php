@@ -92,6 +92,8 @@
 			</tr>
 			<?php
 				foreach($result as $row){ 
+				echo "Row = ";
+				print_r($row);
 			?>
 
 			<tr>
@@ -103,13 +105,13 @@
 					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Message </button></td>";?>
 					
 					
-				</tr>
-				<tr>
+			</tr>
+			
 					
-					<?php echo "<div id=\"#message" . $row['message_id'] . "\" class=\"collapse\">" ;?>
-						<?php echo "<td>" . $row['message_message'] . "</td>";  ?>
-					<?php echo "</div>" ?>
-				</tr>
+				<?php echo "<div id=\"#message" . $row['message_id'] . "\" class=\"collapse\">" ;?>
+					<?php echo "<td>" . $row['message_message'] . "</td>";  ?>
+				<?php echo "</div>" ?>
+			
 			<?php 
 				};
 
