@@ -49,7 +49,7 @@
 			  </a>
 			</div>
 			<div class="navbar-header">
-			  <a class="navbar-brand" href="#">
+			  <a class="navbar-brand" href="changePassword.php">
 				Changer le mot de passe
 			  </a>
 			</div>
