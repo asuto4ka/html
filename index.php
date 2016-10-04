@@ -49,9 +49,9 @@
                $userPwd = $_POST["userPwd"];
 
                // Check if user exists in DB
-               $sql = "SELECT user_id, user_pwd_hash FROM users WHERE user_name = '$userName'";
+               $sql = "SELECT user_id, user_pwd_hash, user_role FROM users WHERE user_name = '$userName'";
                global $file_db;
-               $result =  $file_db->query($sql);
+               $result = $file_db->query($sql);
                $result->setFetchMode(PDO::FETCH_ASSOC);
                $result = $result->fetch();
                
@@ -66,6 +66,7 @@
                      // User session creation
                      $_SESSION['userName'] = $userName;
                      $_SESSION['userId'] = $result['user_id'];
+                     $_SESSION['userRole'] = $result['user_role'];
 
                      header('Location: http://localhost/home.php');
                      exit();
