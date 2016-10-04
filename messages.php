@@ -43,17 +43,17 @@
 		  <div class="container-fluid">
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="messages.php">
-				Messages reçus
+				Inbox
 			  </a>
 			</div>
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="newMessage.php">
-				Nouveaux messages
+				Write message
 			  </a>
 			</div>
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="#">
-				Changer le mot de passe
+				Change password
 			  </a>
 			</div>
 			<?php
@@ -74,53 +74,71 @@
 			// take user messages
 		$userId = $_SESSION['userId'];
 		//print_r($_SESSION);
-		$sql = "SELECT * FROM messages WHERE message_receiver_id = $userId";
-		echo $sql;
+		$sql = "SELECT * FROM messages WHERE message_receiver_id = $userId ORDER BY message_time DESC";
+		//echo $sql;
                global $file_db;
                $result =  $file_db->query($sql);
-		print_r($result);
+		//print_r($result);
 		?>
 
 		<table class="table table-striped">
 			<tr>
-				<td>Date</td>
-				<td>Expéditeur</td>
-				<td>Sujet</td>
-				<td>Répondre</td>
-				<td>Supprimer</td>
-				<td>Ouvrir</td>
+				<th>Date</th>
+				<th>Sender</th>
+				<th>Subject</th>
+				<th>Reply</th>
+				<th>Delete</th>
+				<th>Open</th>
 			</tr>
 			
 		
 			<?php
 				foreach($result as $row){ 
-				echo "Row = ";
-				print_r($row);
+				//echo "Row = ";
+				//print_r($row);
+			?>
+			<?php
+				// Get the sender's user_name for each message
+				$sql2 = 'SELECT user_name FROM users WHERE user_id = ' . $row['message_sender_id'];
+				global $file_db;
+				$name =  $file_db->query($sql2);
+				$name->setFetchMode(PDO::FETCH_ASSOC);
+				$name = $name->fetch();
+
+						
 			?>
 
 			<tr>
 					<?php echo "<td>" . $row['message_time'] . "</td>"; ?>
-					<?php echo "<td>" . $row['message_sender_id'] . "</td>"; ?>
+					<?php echo "<td>" . $name['user_name'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-					<?php echo "<td><a href=\"answer.php?receiver=\"" . $row['message_sender_id'] . "\"> Répondre </a></td>"; ?>
-					<?php echo "<td><a href=\"deleteMessage.php?id=\"" . $row['message_id'] . "\"> Supprimer </a></td>"; ?>
-					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Message </button></td>";?>
+					<?php echo "<td><a class=\"btn btn-primary\" href=\"answer.php?receiver=" . $row['message_sender_id'] . "\"> Reply </a></td>"; ?>
+					<?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
+					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 					
 					
 			</tr>
 			
-					
-				<?php echo "<div id=\"#message" . $row['message_id'] . "\" class=\"collapse\">" ;?>
-					<?php echo " " . $row['message_message'] . " ";  ?>
-				<?php echo "</div>" ?>
+			
 			
 			<?php 
 				};
-			
-
+				echo "</table>";
+				$result =  $file_db->query($sql);
+				foreach($result as $row){ 
 			?>
+				<div class="container">
+					
+					<?php echo "<div id=\"message" . $row['message_id'] . "\" class=\"collapse\">" ;?>
+						<?php echo "<table class=\"table table-bordered\"><tr class=\"info\"><td>" . $row['message_message'] . "</td></tr></table>";  ?>
+					<?php echo "</div>" ?>
+				</div>
+				<?php
+					};
+
+				?>
 		
-		</table>
+		
 		
 	</body>
 
