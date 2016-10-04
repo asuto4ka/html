@@ -78,7 +78,7 @@
                $result =  $file_db->query($sql);
                $result->setFetchMode(PDO::FETCH_ASSOC);
                $result = $result->fetch();
-		//print_r($result);
+		print_r($result);
 		?>
 
 		<table class="table table-striped">
@@ -95,15 +95,17 @@
 			?>
 
 			<tr>
+					<?php echo "<td>" . $row['message_date'] . "</td>"; ?>
+					<?php echo "<td>" . $row['message_sender'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-					<?php echo "<a href=\"answer.php?receiver=\"" . $row['message_sender_id'] . "\"> Répondre </a></td>"; ?>
-					<?php echo "<a href=\"deleteMessage.php?id=\"" . $row['message_id'] . "\"> Supprimer </a></td>"; ?>
+					<?php echo "<td><a href=\"answer.php?receiver=\"" . $row['message_sender_id'] . "\"> Répondre </a></td>"; ?>
+					<?php echo "<td><a href=\"deleteMessage.php?id=\"" . $row['message_id'] . "\"> Supprimer </a></td>"; ?>
+					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Message </button></td>";?>
 					
 					
 				</tr>
 				<tr>
-					<?php echo "<button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Message </button>";?>
+					
 					<?php echo "<div id=\"#message" . $row['message_id'] . "\" class=\"collapse\">" ;?>
 						<?php echo "<td>" . $row['message_message'] . "</td>";  ?>
 					<?php echo "</div>" ?>
