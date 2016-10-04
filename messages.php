@@ -93,6 +93,7 @@
 			<?php
 				foreach($result as $row){ 
 			?>
+
 			<tr>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
@@ -109,6 +110,7 @@
 				</tr>
 			<?php 
 				};
+
 			?>
 		</table>
 		
