@@ -14,11 +14,13 @@
 		<link href="./css/style.php" rel="stylesheet" media="all" type="text/css">
 		<!-- Bootstrap -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
-
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <title>STI Messenger</title>
       
 	</head>
-
+	
 	<body>  
 
 		<h1>STI Messenger - Boîte de réception</h1>
@@ -76,8 +78,6 @@
 		echo $sql;
                global $file_db;
                $result =  $file_db->query($sql);
-               $result->setFetchMode(PDO::FETCH_ASSOC);
-               $result = $result->fetch();
 		print_r($result);
 		?>
 
@@ -90,6 +90,8 @@
 				<td>Supprimer</td>
 				<td>Ouvrir</td>
 			</tr>
+			
+		
 			<?php
 				foreach($result as $row){ 
 				echo "Row = ";
@@ -97,8 +99,8 @@
 			?>
 
 			<tr>
-					<?php echo "<td>" . $row['message_date'] . "</td>"; ?>
-					<?php echo "<td>" . $row['message_sender'] . "</td>"; ?>
+					<?php echo "<td>" . $row['message_time'] . "</td>"; ?>
+					<?php echo "<td>" . $row['message_sender_id'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
 					<?php echo "<td><a href=\"answer.php?receiver=\"" . $row['message_sender_id'] . "\"> Répondre </a></td>"; ?>
 					<?php echo "<td><a href=\"deleteMessage.php?id=\"" . $row['message_id'] . "\"> Supprimer </a></td>"; ?>
@@ -109,13 +111,15 @@
 			
 					
 				<?php echo "<div id=\"#message" . $row['message_id'] . "\" class=\"collapse\">" ;?>
-					<?php echo "<td>" . $row['message_message'] . "</td>";  ?>
+					<?php echo " " . $row['message_message'] . " ";  ?>
 				<?php echo "</div>" ?>
 			
 			<?php 
 				};
+			
 
 			?>
+		
 		</table>
 		
 	</body>
