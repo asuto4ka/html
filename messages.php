@@ -79,7 +79,7 @@
 					<?php echo "<td>" . $row['message_time'] . "</td>"; ?>
 					<?php echo "<td>" . $name['user_name'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-					<?php echo "<td><a class=\"btn btn-primary\" href=\"answer.php?receiver=" . $row['message_sender_id'] . "\"> Reply </a></td>"; ?>
+					<?php echo "<td><a class=\"btn btn-primary\" href=\"answer.php?message_receiver_id=" . $row['message_sender_id'] . " &message_sender_id=" . $row['message_receiver_id'] . "\"> Reply </a></td>"; ?>
 					<?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
 					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 					
