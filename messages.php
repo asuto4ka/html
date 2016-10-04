@@ -38,6 +38,24 @@
 		?>
 		
 		<?php
+			if(isset($_GET['result'])){
+				if($_GET['result'] == "deleted"){
+					echo "<div class=\"container\"><div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Success!</strong> Message deleted.</div></div>";
+				}
+				else if($_GET['result'] == "notdeleted"){
+					echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Message not deleted.</div></div>";
+				}
+				else{
+					echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Unknown parameter</div></div>";
+				}
+			}
+		?>
+		
+
+				
+		
+		
+		<?php
 			// take user messages
 		$userId = $_SESSION['userId'];
 		//print_r($_SESSION);

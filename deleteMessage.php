@@ -34,7 +34,7 @@
 		exit();
 	}
 	else{
-		header('Location: http://localhost/messages.php?result=notdelete');
+		header('Location: http://localhost/messages.php?result=notdeleted');
 		exit();
 	}
 	
