@@ -9,47 +9,23 @@
 <html>
 
    <head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
       
       <link href="./css/style.css" rel="stylesheet" media="all" type="text/css">
 
    </head>
 
    <body>  
-<?php
 
-
-    /**************************************
-    * Create databases and                *
-    * open connections                    *
-    **************************************/
-
-/*
-try {
- 
-    // Create (connect to) SQLite database in file
-    $file_db = new PDO('sqlite:/var/www/databases/database.sqlite');
-    // Set errormode to exceptions
-    $file_db->setAttribute(PDO::ATTR_ERRMODE, 
-                            PDO::ERRMODE_EXCEPTION);
-
-    echo "[DEBUG] Database stiMessenger.sqlite connected and opened ! </br>";
-	
-	
-	$messages = $file_db->query('SELECT * FROM messages where message_receiver_id = '.$_SESSION['userID']);
-	
-	
-	}
-  catch(PDOException $e) {
-    // Print PDOException message
-    echo $e->getMessage();
-  }
-*/
-
-?>
 
       <h1>STI Administrator page</h1>
 	  
 	  <h2>Messages</h2>
+	<?php
+		echo "test php";
+	?>
+
 	  
 	  <table>
 		<thead>
