@@ -89,27 +89,26 @@
 			</tr>
 			
 			<?php
-			
-			foreach($result as $row){ ?>
-			<tr>
-				<td><?php echo $row['message_time']; ?></td>
-				<td><?php echo $row['message_sender']; ?></td>
-				<td><?php echo $row['message_subject']; ?></td>
-				<td><?php echo '<a href="answer.php?receiver="' . $row['message_sender_id'] . '> Répondre </a>'; ?></td>
-				<td><?php echo '<a href="deleteMessage.php?id="' . $row['message_id'] . '> Supprimer </a>'; ?></td>
-				<td><?php echo $row['']; ?></td>
-				
-			</tr>
-			<tr>
-				<button data-toggle="collapse" data-target="#message<?php echo $row['message_id'] ?>">Collapsible</button>
+				foreach($result as $row){ 
+			?>
+				<tr>
+					<td><?php echo $row['message_time']; ?></td>
+					<td><?php echo $row['message_sender']; ?></td>
+					<td><?php echo $row['message_subject']; ?></td>
+					<td><?php echo '<a href="answer.php?receiver="' . $row['message_sender_id'] . '> Répondre </a>'; ?></td>
+					<td><?php echo '<a href="deleteMessage.php?id="' . $row['message_id'] . '> Supprimer </a>'; ?></td>
+					<td><?php echo $row['']; ?></td>
+					
+				</tr>
+				<tr>
+					<button data-toggle="collapse" data-target="#message<?php echo $row['message_id'] ?>">Collapsible</button>
 
-				<div id="#message<?php echo $row['message_id'] ?>" class="collapse">
-					<td> <?php echo $row['message_message'] ?> </td>
-				</div>
-			</tr>
-			<?php }
-			
-			
+					<div id="#message<?php echo $row['message_id'] ?>" class="collapse">
+						<td> <?php echo $row['message_message'] ?> </td>
+					</div>
+				</tr>
+			<?php 
+				}
 			?>
 		</table>
 		
