@@ -97,7 +97,7 @@
 					<?php echo "<td>" . $row['message_time'] . "</td>"; ?>
 					<?php echo "<td>" . $name['user_name'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-					<?php echo "<td><a class=\"btn btn-primary\" href=\"answer.php?message_receiver_id=" . $row['message_sender_id'] . " &message_sender_id=" . $row['message_receiver_id'] . "\"> Reply </a></td>"; ?>
+					<?php echo "<td><a class=\"btn btn-primary\" href=\"answer.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a></td>"; ?>
 					<?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
 					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 					
@@ -109,13 +109,31 @@
 			<?php 
 				};
 				echo "</table>";
+				
+				//Pour obtenir tous les messages on réexécute un foreach (utile surtout pour l'id).
 				$result =  $file_db->query($sql);
 				foreach($result as $row){ 
+					//On veut le nom de l'expéditeur du message
+					
+					global $file_db;
+					$name =  $file_db->query($sql2);
+					$name->setFetchMode(PDO::FETCH_ASSOC);
+					$name = $name->fetch();
+					$name = $name['user_name'];
+				
+				
 			?>
 				<div class="container">
 					
 					<?php echo "<div id=\"message" . $row['message_id'] . "\" class=\"collapse\">" ;?>
-						<?php echo "<table class=\"table table-bordered\"><tr class=\"info\"><td>" . $row['message_message'] . "</td></tr></table>";  ?>
+						<?php echo "<table class=\"table table-bordered\"><tr class=\"active\"><td>From: " . $name . "</td></tr>";  ?>
+						<?php echo "<tr class=\"active\"><td>" . $row['message_subject'] . "</td>";?>
+						<?php echo "<tr class=\"info\"><td>" . $row['message_message'] . "</td>";?>
+						<?php echo "<tr class=\"info\"><td><a class=\"btn btn-primary\" href=\"answer.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a> ";?>
+						<?php echo "<a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a>";?>
+						<?php echo "<button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
+						<?php echo "</tr>";?>
+						<?php echo "</table>";?>
 					<?php echo "</div>" ?>
 				</div>
 				<?php
