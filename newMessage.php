@@ -63,7 +63,7 @@
 			echo "<br/>[debug] Saving message in database";
 			global $file_db;
 			$sql = "INSERT INTO messages (message_subjet, message_message, message_sender_id , message_receiver_id)
-				VALUES ("","","","")
+				VALUES (" . ",".",".",".")";
 				 
 			echo "<br/>[debug] sql: ". $sql;
 			$result =  $file_db->query($sql);
