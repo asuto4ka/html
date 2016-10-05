@@ -58,15 +58,18 @@
 			}
 		}
 		
-		function sendMessage($userId, $subject, $message){
+		function sendMessage($userIdTo, $subject, $message){
 			//TODO - enregistre dans DB
 			echo "<br/>[debug] Saving message in database";
+			
 			global $file_db;
-			$sql = "INSERT INTO messages (message_subjet, message_message, message_sender_id , message_receiver_id)
-				VALUES (" . ",".",".",".")";
+			$sql = "INSERT INTO messages (message_subject, message_message, message_sender_id , message_receiver_id)
+				VALUES ('" . $subject . "','". $message ."',". $_SESSION['userId'] .",". $userIdTo.")";
 				 
 			echo "<br/>[debug] sql: ". $sql;
-			$result =  $file_db->query($sql);
+			$file_db->exec($sql);
+			
+			return;
 		}
 	?>
 
@@ -75,6 +78,11 @@
    <body>  
 	
 	<?php
+		include("includes/menu.php");
+	?>	
+	
+	<?php
+	
 	
 	// Si on a l'id depuis GET
 	if(isset($_GET['message_receiver_id'])){
@@ -91,7 +99,7 @@
 		echo "<br/>[debug] User id with function: " . $id;
 		//Vérifier si existe
 		if($id == false){
-			// FALSE USER NAME
+			// FALSE USER NAME - bandeau d'erreur
 			echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Unknown user !</strong> Please enter an existing user !</div></div>";
 		}
 		else{
@@ -104,11 +112,11 @@
 				
 				// Securiser input TODO
 			
-				// On a le destinataire et le message on peut envoyer
+				// On a le destinataire et le message + sujet, on peut envoyer
 				sendMessage($id, $subject, $message);
 			}
 			else{
-				//erreur, message vide.
+				//MESSAGE VIDE - bandeau d'erreur
 				echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Message Empty!</strong> Please fill the message field before sending it.</div></div>";
 			}
 		}
@@ -117,16 +125,34 @@
 	
 	 ?>
 
-      <h1>STI Write a new message</h1>
+      
 	  
-	  <h2></h2>
-	  
-	  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
-         
-         	<div class="centre">
+	
+	<div class="container">
+	<h1>STI Write a new message</h1>
+	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
+		
+		<?php 
+			// backup message et sujet si username faux, permet de ne pas retaper le message
+			$messagebkp = "";
+			if(isset($_POST['form_message']) && !empty($_POST['form_message'])){
+				$messagebkp = $_POST['form_message'];
+			}
+			$subjectbkp = "";
+			if(isset($_POST['form_subject']) && !empty($_POST['form_subject'])){
+				$subjectbkp = $_POST['form_subject'];
+			}
+		?>
+
+         	<div class="form-group">
+    			<label for="email">To:</label> 
 			<input type="text" name="form_to" id="form_to" placeholder="To" value="<?php if(isset($_GET['message_receiver_id'])){echo $to;} ?>"/>
-			<input type="text" name="form_subject" id="form_subject" placeholder="Subject"/>
-            		<input type="text" name="form_message" id="form_message" placeholder="Type your message here"/>
+		</div>
+		<div class="form-group">
+    			<label for="email">Subject:</label> 
+			<input type="text" name="form_subject" id="form_subject" placeholder="Subject" value="<?php echo $subjectbkp; ?>"/>
+		</div>
+            		<textarea class="form-control" rows="5" type="text" name="form_message" id="form_message" placeholder="Type your message here" value="<?php echo $messagebkp; ?>"></textarea>
             	<br>
          	</div>
          
@@ -137,6 +163,7 @@
          	</div>
          
       	</form>
+	</div>
 	
 	<?php
 	

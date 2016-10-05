@@ -1,6 +1,6 @@
 <meta charset="utf-8" />      
 
-<link href="../css/style.php" rel="stylesheet" media="all" type="text/css">
+<!--<link href="../css/style.php" rel="stylesheet" media="all" type="text/css">-->
 <!-- Bootstrap -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
