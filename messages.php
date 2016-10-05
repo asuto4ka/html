@@ -1,5 +1,6 @@
 <?php
 	session_start();
+        include("checkUserSession.php");
    	include("databaseConnection.php");
 ?>
 
@@ -19,19 +20,7 @@
 
 		<h1>STI Messenger - Boîte de réception</h1>
 
-		<p> 
-			<?php
-            // Check if user session exist
-            if (isset($_SESSION['userId'])) {
-				   echo "Welcome ";
-				   echo $_SESSION['userName'];
-				   echo " !</br>";
-				}
-				else {
-				   echo "Sorry, you must log in to access this page.";
-				}
-			?>
-		</p>
+		<p><p>
 		
 		<?php
 			include("includes/menu.php");

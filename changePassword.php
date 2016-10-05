@@ -1,13 +1,8 @@
 <?php
    session_start();
+   include("checkUserSession.php");
    require('password.php');
    include("databaseConnection.php");
-
-   if ($_SESSION['userId'] == null) {
-      header('Location: http://localhost/index.php');
-      exit();
-   }
-
 ?>
 
 <!DOCTYPE HTML> 
@@ -65,6 +60,7 @@
       <?php
          $changePasswordBtn = isset($_POST['changePasswordBtn']) ? $_POST['changePasswordBtn'] : NULL;
 
+         // If changePasswordBtn was clicked 
          if ($changePasswordBtn) {
             $oldPassword = $newPassword = $confirmNewPassword = "";
 
@@ -91,12 +87,11 @@
                      if ($newPassword == $confirmNewPassword) {
                         
                         if ($oldPassword != $newPassword) {
+
                            // Update password in DB
                            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);            
                            $sql = "UPDATE users SET user_pwd_hash = '$newPasswordHash' WHERE user_id = '$userId'";
                            $result =  $file_db->query($sql);
-                           $result->setFetchMode(PDO::FETCH_ASSOC);
-                           $result = $result->fetch();
                            echo "<h2>Password changed !</h2>";
                         }
                         else {

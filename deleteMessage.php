@@ -1,5 +1,6 @@
 <?php
    	session_start();
+        include("checkUserSession.php");
    	include("databaseConnection.php");
 	$message = $_GET['id'];
 	
@@ -20,7 +21,7 @@
 	echo "session: " . $_SESSION['userId'];
 	echo "message: " . $result;
 	
-	// Check if user session exist and if the user has the right to delete the message
+	// Check if user session exists and if the user has the right to delete the message
         if (isset($_SESSION['userId']) && $_SESSION['userId'] == $result) {
 		echo "ok to delete";	
 		global $file_db;
@@ -37,8 +38,5 @@
 		header('Location: http://localhost/messages.php?result=notdeleted');
 		exit();
 	}
-	
-	
-	
 	
 ?>

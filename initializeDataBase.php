@@ -126,6 +126,9 @@
     // Close file db connection
     $file_db = null;
 
+    // Add write permission to database.sqlite file for user sti
+    chmod("/var/www/databases/database.sqlite", 0777);
+
     echo "[DEBUG] Database connection closed ! </br>";
   }
   catch(PDOException $e) {

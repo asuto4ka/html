@@ -1,5 +1,6 @@
 <?php
-   	session_start();  
+   	session_start(); 
+        include("checkUserSession.php"); 
 	include("databaseConnection.php");
    //On récupère qui seront les éxpéditeurs et les déstinataires
 	

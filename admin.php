@@ -1,5 +1,6 @@
 <?php
-	session_start(); 
+	session_start();
+        include("checkAdminSession.php");
 	include("databaseConnection.php");
    
 ?>
@@ -11,15 +12,6 @@
 	<head>
 		<?php
 			include("includes/header.php");
-			            // Check if user session exist
-            		if (isset($_SESSION['userId']) && $_SESSION['userRole'] == 1) {
-				   echo "Welcome dear ";
-				   echo $_SESSION['userName'];
-				   echo " ! You're administrator here !</br>";
-			}
-			else {
-				echo "Sorry, you must log in to access this page.";
-			}
 			
 			function getUsers(){
 				$sql = "SELECT * FROM users";
