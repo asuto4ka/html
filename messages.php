@@ -1,6 +1,6 @@
 <?php
-   session_start();
-   include("databaseConnection.php");
+	session_start();
+   	include("databaseConnection.php");
 ?>
 
 <!DOCTYPE HTML> 
@@ -108,7 +108,8 @@
 			
 			
 			<?php 
-				};
+				}; //End foreach
+
 				echo "</table>";
 				
 				//Pour obtenir tous les messages on réexécute un foreach (utile surtout pour l'id).
@@ -130,7 +131,7 @@
 						<?php echo "<table class=\"table table-bordered\"><tr class=\"active\"><td>From: " . $name . "</td></tr>";  ?>
 						<?php echo "<tr class=\"active\"><td>" . $row['message_subject'] . "</td>";?>
 						<?php echo "<tr class=\"info\"><td>" . $row['message_message'] . "</td>";?>
-						<?php echo "<tr class=\"info\"><td><a class=\"btn btn-primary\" href=\"answer.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a> ";?>
+						<?php echo "<tr class=\"info\"><td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a> ";?>
 						<?php echo "<a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a>";?>
 						<?php echo "<button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 						<?php echo "</tr>";?>

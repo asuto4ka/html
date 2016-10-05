@@ -1,0 +1,84 @@
+<?php
+	session_start(); 
+	include("databaseConnection.php");
+   
+?>
+
+<!DOCTYPE HTML> 
+ 
+<html>
+
+	<head>
+		<?php
+			include("includes/header.php");
+			            // Check if user session exist
+            		if (isset($_SESSION['userId']) && $_SESSION['userRole'] == 1) {
+				   echo "Welcome dear ";
+				   echo $_SESSION['userName'];
+				   echo " ! You're administrator here !</br>";
+			}
+			else {
+				echo "Sorry, you must log in to access this page.";
+			}
+			
+			function getUsers(){
+				$sql = "SELECT * FROM users";
+				echo "<br/>[debug]". $sql;
+			       	global $file_db;
+			       	$result =  $file_db->query($sql);
+				$result->setFetchMode(PDO::FETCH_ASSOC);
+				//$result = $result->fetch();
+				echo "<br/>[debug] result: ";
+				print_r( $result);
+				return $result;
+			}
+		?>
+
+	</head>
+
+	<body>  
+
+
+		<h1>STI Administrator page</h1>
+					  
+		<h2>Messages</h2>
+		<?php
+			echo "<br/>[debug] Getting users list";
+			$users = getUsers();
+			echo "<br/>[debug] Users with print_r: ";
+			print_r( $users);
+		
+		?>
+		<table class="table table-striped">
+			<tr>
+				<th>User name</th>
+				<th>Reset password</th>
+				<th>Status</th>
+				<th>Role</th>
+				<th>Action</th>
+				<th>Delete</th>
+			</tr>
+			
+			<?php
+				while ($row = $users->fetch() ){ 
+					echo "<br/>Row: ";
+					print_r( $row);
+					
+			?>
+			<tr>
+				<td> <?php echo $row['user_name']; ?> </td>
+				<td> <a class="btn btn-primary" href="changePassword.php?user=<?php echo $row['user_id']; ?>"> Reset password </a> </td>
+				<td> <a class="btn btn-primary" href="switchUserState.php?user=<?php echo $row['user_id'];  ?> "> <?php if($row['user_active'] == 1){echo "deactivate";}else{echo "activate";} ?>  </a> </td>
+				<td> <?php if($row['user_role'] == 1){echo "Admin";}else{echo "User";} ?> </td>
+				<td> <a class="btn btn-primary" href="switchUserRole.php?user=<?php echo $row['user_id'];  ?> "> <?php if($row['user_role'] == 1){echo "Make user";}else{echo "Make admin";} ?>  </a> </td>
+				<td> <a class="btn btn-danger" href="deleteUser.php?user=<?php echo $row['user_id'];  ?> "> Delete user </a> </td>
+			</tr>
+			<?php
+				}; 
+			?>
+		</table>
+	
+	
+	
+	</body>
+</html>

@@ -36,36 +36,10 @@
 			?>
 		</p>
 		
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid">
-			<div class="navbar-header">
-			  <a class="navbar-brand" href="messages.php">
-				Messages reçus
-			  </a>
-			</div>
-			<div class="navbar-header">
-			  <a class="navbar-brand" href="newMessage.php">
-				Nouveaux messages
-			  </a>
-			</div>
-			<div class="navbar-header">
-			  <a class="navbar-brand" href="changePassword.php">
-				Changer le mot de passe
-			  </a>
-			</div>
-			<?php
-			if ($_SESSION['user_role'] == 1){
-				echo '<div class="navbar-header">
-			  <a class="navbar-brand" href="admin.php">
-				Administration
-			  </a>
-			</div>';
-			}
+		<?php 
+			include("includes/menu.php");
 			
-			
-			?>
-		  </div>
-		</nav>
+		?>
 
 	</body>
 

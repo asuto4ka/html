@@ -11,12 +11,17 @@
 			  </a>
 			</div>
 			<div class="navbar-header">
-			  <a class="navbar-brand" href="#">
+			  <a class="navbar-brand" href="changePassword.php">
 				Change password
 			  </a>
 			</div>
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="logout.php">
+				Logout
+			  </a>
+			</div>
 			<?php
-			if ($_SESSION['user_role'] == 1){
+			if ($_SESSION['userRole'] == 1){
 				echo '<div class="navbar-header">
 			  <a class="navbar-brand" href="admin.php">
 				Administration

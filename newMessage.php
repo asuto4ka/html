@@ -9,6 +9,7 @@
 		
 	//$to = $_GET["message_receiver_id"];
 	$from = $_SESSION['userId'];
+
    
 ?>
 
@@ -23,8 +24,9 @@
 
 		function getUserName($id){
 			global $file_db;
+			//TODO secure $id 
 			$sql = "SELECT user_name FROM users WHERE user_id = " . $id;
-			echo "<br/>[debug] sql: ". $sql;
+			//echo "<br/>[debug] sql: ". $sql;
 			$name =  $file_db->query($sql);
 			$name->setFetchMode(PDO::FETCH_ASSOC);
 			$name = $name->fetch();
@@ -35,8 +37,9 @@
 		
 		function getUserId($name){
 			global $file_db;
+			//TODO secure $name
 			$sql = "SELECT user_id FROM users WHERE user_name = '" . $name . "'";
-			echo "<br/>[debug] sql: ". $sql;
+			//echo "<br/>[debug] sql: ". $sql;
 			$id =  $file_db->query($sql);
 			
 			$id->setFetchMode(PDO::FETCH_ASSOC);
@@ -45,32 +48,31 @@
 			if(isset($id[user_id]))
 			{
 			    	// row exists. do whatever you would like to do.
-				
-				echo "<br/>[debug] after id fetch -> " ;
-				print_r($id);
 				$id = $id['user_id'];
-				echo "[debug] In getUserId -> " . $id;
+				//echo "[debug] In getUserId -> " . $id;
 				return $id;
 			}
 			else{
-				echo "<br/>[debug] returning false";
+				echo "<br/>[debug] returning false, user id don't exist - fct = getUserId(name)";
 				return false;
 			}
 		}
 		
 		function sendMessage($userIdTo, $subject, $message){
-			//TODO - enregistre dans DB
+			// Enregistre dans DB
 			echo "<br/>[debug] Saving message in database";
 			
 			global $file_db;
+			//TODO secure all input
 			$sql = "INSERT INTO messages (message_subject, message_message, message_sender_id , message_receiver_id)
 				VALUES ('" . $subject . "','". $message ."',". $_SESSION['userId'] .",". $userIdTo.")";
 				 
-			echo "<br/>[debug] sql: ". $sql;
+			//echo "<br/>[debug] sql: ". $sql;
 			$file_db->exec($sql);
 			
 			return;
 		}
+		
 	?>
 
    </head>
@@ -79,18 +81,16 @@
 	
 	<?php
 		include("includes/menu.php");
-	?>	
 	
-	<?php
 	
 	
 	// Si on a l'id depuis GET
-	if(isset($_GET['message_receiver_id'])){
+	/*if(isset($_GET['message_receiver_id'])){
 		echo "<br/>[debug] User id from GET: " . $_GET['message_receiver_id'];
-		$to = getUserName($_GET['message_receiver_id']);
+		$to = getUserName(htmlspecialchars(addslashes($_GET['message_receiver_id'])));
 		echo "<br/>[debug] Get user name from id: " . $to;
 		//remplis le formulaire avec $to -> nom d'utilisateur destinataire;
-	}
+	}*/
 	
 	// SI on a le NOM (username)  depuis POST
 	if(isset($_POST['form_to'])){
@@ -114,6 +114,9 @@
 			
 				// On a le destinataire et le message + sujet, on peut envoyer
 				sendMessage($id, $subject, $message);
+				header("Location: http://localhost/messages.php");
+				exit();
+					
 			}
 			else{
 				//MESSAGE VIDE - bandeau d'erreur
@@ -146,7 +149,7 @@
 
          	<div class="form-group">
     			<label for="email">To:</label> 
-			<input type="text" name="form_to" id="form_to" placeholder="To" value="<?php if(isset($_GET['message_receiver_id'])){echo $to;} ?>"/>
+			<input type="text" name="form_to" id="form_to" placeholder="To" value="<?php if(isset($_GET['message_receiver_id'])){echo getUserName($_GET['message_receiver_id']);} ?>"/>
 		</div>
 		<div class="form-group">
     			<label for="email">Subject:</label> 
@@ -164,26 +167,6 @@
          
       	</form>
 	</div>
-	
-	<?php
-	
-		$answer = $_POST['form_message'];
-		$to = $_POST['form_to'];
-		echo "[debug] from: ". $from . "  to: ". $to;
-		if(!empty($answer)){
-			echo "<br/>[debug] answer: ". $answer;
-		}else{
-			echo "message empty";
-		};
-
-		
-		
-		
-		
-	
-		
-	?>
-      
 
    </body>
 </html>
