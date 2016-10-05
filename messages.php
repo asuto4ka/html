@@ -38,6 +38,7 @@
 		?>
 		
 		<?php
+			// Messages de confirmation de suppression de messages etc
 			if(isset($_GET['result'])){
 				if($_GET['result'] == "deleted"){
 					echo "<div class=\"container\"><div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Success!</strong> Message deleted.</div></div>";
@@ -97,7 +98,7 @@
 					<?php echo "<td>" . $row['message_time'] . "</td>"; ?>
 					<?php echo "<td>" . $name['user_name'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-					<?php echo "<td><a class=\"btn btn-primary\" href=\"answer.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a></td>"; ?>
+					<?php echo "<td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a></td>"; ?>
 					<?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
 					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 					
