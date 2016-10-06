@@ -50,7 +50,54 @@ function sendMessage($userIdTo, $subject, $message){
 	return;
 }
 
+function getUserState($userId){
+	global $file_db;
+	$sql = "SELECT user_active FROM users WHERE user_id = " . $userId;
+	$state =  $file_db->query($sql);
+	$state->setFetchMode(PDO::FETCH_ASSOC);		
+	$state = $state->fetch();		
+	$state = $state['user_active'];		
+	return $state;
+}
+	
+function setUserState($userId, $state){
+	global $file_db;
+	$sql = "UPDATE users SET user_active = " . $state ." WHERE user_id = " . $userId;
+	echo "<br/>[debug] setUserState request: " . $sql;
+	$file_db->exec($sql);
+	echo "<br/>[debug] request done";
+	return;
+}
+//TODO
+function getUserRole($userId){
+	global $file_db;
+	$sql = "SELECT user_role FROM users WHERE user_id = " . $userId;
+	$role =  $file_db->query($sql);
+	$role->setFetchMode(PDO::FETCH_ASSOC);		
+	$role = $role->fetch();		
+	$role = $role['user_role'];		
+	return $role;
+}
 
+//TODO - pas fini à vérifier !!!
+function getNumberOfAdmin(){
+	global $file_db;
+	$sql = "SELECT count(user_role) FROM users HAVING user_role = 1";
+	$admins = $file_db->query($sql);
+	$admins->setFetchMode(PDO::FETCH_ASSOC);
+	$admins = $admins->fetch();
+	echo "<br/>Debug: ";
+	print_r($admins);
+	return $admins;
+}
 
-
+//TODO
+function setUserRole($userId, $role){
+	global $file_db;
+	$sql = "UPDATE users SET user_role = " . $role ." WHERE user_id = " . $userId;
+	echo "<br/>[debug] setUserRole request: " . $sql;
+	$file_db->exec($sql);
+	echo "<br/>[debug] request done";
+	return;
+}
 ?>
