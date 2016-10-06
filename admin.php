@@ -30,9 +30,9 @@
 
 	<body>  
 
-
+		
 		<h1>STI Administrator page</h1>
-					  
+		<?php include("includes/menu.php"); ?>		  
 		<h2>Messages</h2>
 		<?php
 			echo "<br/>[debug] Getting users list";
