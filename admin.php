@@ -30,9 +30,9 @@
 
 	<body>  
 
-		
+
 		<h1>STI Administrator page</h1>
-		<?php include("includes/menu.php"); ?>		  
+					  
 		<h2>Messages</h2>
 		<?php
 			echo "<br/>[debug] Getting users list";
@@ -59,7 +59,7 @@
 			?>
 			<tr>
 				<td> <?php echo $row['user_name']; ?> </td>
-				<td> <a class="btn btn-primary" href="changePassword.php?user=<?php echo $row['user_id']; ?>"> Reset password </a> </td>
+				<td> <a class="btn btn-primary" href="changeUserPassword.php?userId=<?php echo $row['user_id']; ?>&userName=<?php echo $row['user_name'];?>"> Reset password </a> </td>
 				<td> <a class="btn btn-primary" href="switchUserState.php?user=<?php echo $row['user_id'];  ?> "> <?php if($row['user_active'] == 1){echo "deactivate";}else{echo "activate";} ?>  </a> </td>
 				<td> <?php if($row['user_role'] == 1){echo "Admin";}else{echo "User";} ?> </td>
 				<td> <a class="btn btn-primary" href="switchUserRole.php?user=<?php echo $row['user_id'];  ?> "> <?php if($row['user_role'] == 1){echo "Make user";}else{echo "Make admin";} ?>  </a> </td>
