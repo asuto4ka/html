@@ -49,7 +49,7 @@
                $userPwd = $_POST["userPwd"];
 
                // Check if user exists in DB
-               $sql = "SELECT user_id, user_pwd_hash, user_role, user_active FROM users WHERE user_name = '$userName'";
+               $sql = "SELECT user_id, user_pwd_hash, user_role, user_active, user_deleted FROM users WHERE user_name = '$userName'";
                global $file_db;
                $result = $file_db->query($sql);
                $result->setFetchMode(PDO::FETCH_ASSOC);
@@ -58,34 +58,38 @@
                // Check if user exists
                if($result['user_id']) {
 
-                  // Check if user is active
-                  $userActive = $result['user_active'];
-                  if ($userActive != 0) {
+                  // Check if user isn't deleted
+                  if ($result['user_deleted'] != 1) {
+                     
+                     // Check if user is active
+                     $userActive = $result['user_active'];
+                     if ($userActive != 0) {
 
-                     $user_pwd_hash = $result['user_pwd_hash'];
+                        $user_pwd_hash = $result['user_pwd_hash'];
 
-                     // Check if password entered references the password hash in database
-                     if (password_verify($userPwd, $user_pwd_hash)) {
+                        // Check if password entered references the password hash in database
+                        if (password_verify($userPwd, $user_pwd_hash)) {
 
-                        // User session creation
-                        $_SESSION['userName'] = $userName;
-                        $_SESSION['userId'] = $result['user_id'];
-                        $_SESSION['userRole'] = $result['user_role'];
+                           // User session creation
+                           $_SESSION['userName'] = $userName;
+                           $_SESSION['userId'] = $result['user_id'];
+                           $_SESSION['userRole'] = $result['user_role'];
 
-                        header('Location: http://localhost/home.php');
-                        exit();
+                           header('Location: http://localhost/home.php');
+                           exit();
+                        }
+                        else {
+                           echo '<h2>Username and/or password entered are incorrect !</h2>';
+          
+                        }
                      }
                      else {
-                        echo '<h2>Username and/or password entered are incorrect !</h2>';
-          
+                        echo '<h2>Account desactivated, contact your administrator !</h2>';
                      }
                   }
                   else {
-                     echo '<h2>Account desactivated, contact your administrator !</h2>';
+                     echo '<h2>Username and/or password entered are incorrect !</h2>';
                   }
-               }
-               else {
-                  echo '<h2>Username and/or password entered are incorrect !</h2>';
                }
             }
          }
