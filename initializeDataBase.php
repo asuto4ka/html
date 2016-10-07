@@ -33,7 +33,8 @@
                     user_name TEXT, 
                     user_pwd_hash TEXT, 
                     user_role INTEGER,
-		    user_active INTEGER)");
+		    user_active INTEGER,
+                    user_deleted INTEGER)");
 
     // Create table messages
     $file_db->exec("CREATE TABLE IF NOT EXISTS messages (
@@ -62,18 +63,20 @@
                   array('user_name' => 'Thibault',
                         'user_pwd_hash' => $user1_pwd_hash,
                         'user_role' => 0,
-                        'user_active' => 1),
+                        'user_active' => 1,
+                        'user_deleted' => 0),
 
                   array('user_name' => 'Sebastien',
                         'user_pwd_hash' => $user2_pwd_hash,
                         'user_role' => 0,
-                        'user_active' => 1),
+                        'user_active' => 1,
+                        'user_deleted' => 0),
 
                   array('user_name' => 'Bob',
                         'user_pwd_hash' => $user3_pwd_hash,
                         'user_role' => 1,
-                        'user_active' => 1),
-
+                        'user_active' => 1,
+                        'user_deleted' => 0)
                 );
 
     // Array with some test data to insert to database             
@@ -96,7 +99,7 @@
                   array('message_subject' => 'OK',
                         'message_message' => 'Yeah, good luck, see you soon !.',
                         'message_sender_id' => 1,
-                        'message_receiver_id' => 2),
+                        'message_receiver_id' => 2)
 
                 );
  
