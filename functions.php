@@ -11,6 +11,18 @@ function getUserName($id){
 	return $name;
 }
 
+function getUsers(){
+	$sql = "SELECT * FROM users";
+	echo "<br/>[debug]". $sql;
+       	global $file_db;
+       	$result =  $file_db->query($sql);
+	$result->setFetchMode(PDO::FETCH_ASSOC);
+	//$result = $result->fetch();
+	echo "<br/>[debug] result: ";
+	print_r( $result);
+	return $result;
+}
+
 
 function getUserId($name){
 	global $file_db;
@@ -82,13 +94,11 @@ function getUserRole($userId){
 //TODO - pas fini à vérifier !!!
 function getNumberOfAdmin(){
 	global $file_db;
-	$sql = "SELECT count(user_role) FROM users HAVING user_role = 1";
+	$sql = "SELECT count(user_role) as nb FROM users GROUP BY user_role HAVING user_role = 1 ";
 	$admins = $file_db->query($sql);
 	$admins->setFetchMode(PDO::FETCH_ASSOC);
 	$admins = $admins->fetch();
-	echo "<br/>Debug: ";
-	print_r($admins);
-	return $admins;
+	return $admins['nb'];
 }
 
 //TODO
