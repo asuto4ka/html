@@ -70,7 +70,7 @@
 				<td> <a class="btn btn-primary" href="switchUserState.php?user=<?php echo $row['user_id'];  ?> "> <?php if($row['user_active'] == 1){echo "deactivate";}else{echo "activate";} ?>  </a> </td>
 				<td> <?php if($row['user_role'] == 1){echo "Admin";}else{echo "User";} ?> </td>
 				<td> <a class="btn btn-primary" href="switchUserRole.php?user=<?php echo $row['user_id'];  ?> "> <?php if($row['user_role'] == 1){echo "Make user";}else{echo "Make admin";} ?>  </a> </td>
-				<td> <a class="btn btn-danger" href="deleteUser.php?user=<?php echo $row['user_id'];  ?> "> Delete user </a> </td>
+				<td> <a class="btn btn-danger" href="deleteUser.php?userId=<?php echo $row['user_id'];  ?> "> Delete user </a> </td>
 			</tr>
 			<?php
 				}; 

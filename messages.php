@@ -88,7 +88,7 @@
 					<?php echo "<td>" . $name['user_name'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
 					<?php echo "<td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a></td>"; ?>
-					<?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
+					<?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?messageId=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
 					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 					
 					
@@ -121,7 +121,7 @@
 						<?php echo "<tr class=\"active\"><td>" . $row['message_subject'] . "</td>";?>
 						<?php echo "<tr class=\"info\"><td>" . $row['message_message'] . "</td>";?>
 						<?php echo "<tr class=\"info\"><td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a> ";?>
-						<?php echo "<a class=\"btn btn-primary\" href=\"deleteMessage.php?id=" . $row['message_id'] . "\"> Delete </a>";?>
+						<?php echo "<a class=\"btn btn-primary\" href=\"deleteMessage.php?messageId=" . $row['message_id'] . "\"> Delete </a>";?>
 						<?php echo "<button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 						<?php echo "</tr>";?>
 						<?php echo "</table>";?>

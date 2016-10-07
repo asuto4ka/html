@@ -36,10 +36,11 @@
                       echo "<h2>Deletion impossible ! Admin can't delete his account !</h2>";
                    }
                    else {
-                   
-                      // Get the user_role
-                      $sql = "SELECT user_role, user_active FROM users WHERE user_id = '$userId'";
+
                       global $file_db;
+                   
+                      // Get the user_role and the user_active
+                      $sql = "SELECT user_role, user_active FROM users WHERE user_id = '$userId'";
                       $result =  $file_db->query($sql);
                       $result->setFetchMode(PDO::FETCH_ASSOC);
                       $result = $result->fetch();
