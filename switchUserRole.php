@@ -6,38 +6,45 @@
 	
 	if(isset($_GET['user']) && !empty($_GET['user']) && is_numeric ($_GET['user'])){
 		
+		//TODO vérifier validité userId dans la db
 		$userId = $_GET['user'];
+		if(!verifyId($userId)){header("Location: http://localhost/admin.php?msg=noUser");exit();}		
+		
 		$nbAdmins = getNumberOfAdmin();
 		$userRole = getUserRole($userId);
 		$currentUserId = $_SESSION['userId'];
-
-		echo"[debug]User Role: " . $userRole . "   number of admin: ". $nbAdmins;
 		
 		// Si c'est un admin, on ne change pas son role s'il est le seul
-		if($userRole == 1){
-			if($nbAdmin <= 1){
-				header("Location: http://localhost/admin.php?msg=oneAdmin");
-			}
+		if($userRole == 1 && $nbAdmins <= 1){
+			header("Location: http://localhost/admin.php?msg=oneAdmin");
+			exit();
 		}
 		
 		// Il doit y avoir au moins un admin, et on ne peut pas changer son propre status (admin/user)(1/0)
 		// si true, on inverse 0 et 1 ou vice versa
 		if($userId != $currentUserId){
-			//$userRole === 1: setUserRole($userId, 0) ? setUserRole($userId, 1);
 			
-			echo "in the fucking if";
 			if($userRole == 1){
 				setUserRole($userId, 0);
+				header("Location: http://localhost/admin.php?msg=ok");
+				exit();
 			}
 			else{
 				setUserRole($userId, 1);
+				header("Location: http://localhost/admin.php?msg=ok");
+				exit();
 			}
 		}
-		header("Location: http://localhost/admin.php?msg=ok");
+		else{
+			header("Location: http://localhost/admin.php?msg=self");
+			exit();		
+		}
 		
-		
-		
-		
+	
+	}
+	else{
+		header("Location: http://localhost/admin.php?msg=noUser");
+		exit();
 	}
    
 ?>

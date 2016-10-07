@@ -1,4 +1,17 @@
 <?php
+
+function verifyId($id){
+	global $file_db;
+	$sql = "SELECT * from users WHERE user_id = ". $id;
+	$result = $file_db->query($sql);
+	$result->setFetchMode(PDO::FETCH_ASSOC);
+	print_r($result);
+	$result = $result->fetch();
+	print_r($result);
+	if(empty($result)){return false;}
+	else{return true;}
+}
+
 function getUserName($id){
 	global $file_db;
 	//TODO use prepared statment 
@@ -13,13 +26,13 @@ function getUserName($id){
 
 function getUsers(){
 	$sql = "SELECT * FROM users";
-	echo "<br/>[debug]". $sql;
+	//echo "<br/>[debug]". $sql;
        	global $file_db;
        	$result =  $file_db->query($sql);
 	$result->setFetchMode(PDO::FETCH_ASSOC);
 	//$result = $result->fetch();
-	echo "<br/>[debug] result: ";
-	print_r( $result);
+	//echo "<br/>[debug] result: ";
+	//print_r( $result);
 	return $result;
 }
 

@@ -24,11 +24,30 @@
 					  
 		<h2></h2>
 		<?php
-			echo "<br/>[debug] Getting users list";
 			$users = getUsers();
-			echo "<br/>[debug] Users with print_r: ";
-			print_r( $users);
+			// Gestion des erreurs GET
+			
+			// Messages de confirmation de suppression de messages etc
+			if(isset($_GET['msg'])){
+				if($_GET['msg'] == "ok"){
+					echo "<div class=\"container\"><div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Success!</strong> Role switched.</div></div>";
+				}
+				else if($_GET['msg'] == "self"){
+					echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> You cannot change your own role.</div></div>";
+				}
+				else if($_GET['msg'] == "noUser"){
+					echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> No valid user.</div></div>";
+				}
+				else if($_GET['msg'] == "oneAdmin"){
+					echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> There must be at least one administrator. </div></div>";
+				}
+				
+			}
 		
+		
+
+
+
 		?>
 		<table class="table table-striped">
 			<tr>
@@ -42,8 +61,6 @@
 			
 			<?php
 				while ($row = $users->fetch() ){ 
-					echo "<br/>Row: ";
-					print_r( $row);
 					
 			?>
 			<tr>
