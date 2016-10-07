@@ -85,16 +85,17 @@ function getUserRole($userId){
 	global $file_db;
 	$sql = "SELECT user_role FROM users WHERE user_id = " . $userId;
 	$role =  $file_db->query($sql);
+	print_r($role);
 	$role->setFetchMode(PDO::FETCH_ASSOC);		
-	$role = $role->fetch();		
-	$role = $role['user_role'];		
+	$role = $role->fetch();	
+	$role = $role['user_role'];
 	return $role;
 }
 
 //TODO - pas fini à vérifier !!!
 function getNumberOfAdmin(){
 	global $file_db;
-	$sql = "SELECT count(user_role) as nb FROM users GROUP BY user_role HAVING user_role = 1 ";
+	$sql = "SELECT count(user_role) as nb FROM users GROUP BY user_role HAVING user_role = 1 AND user_active = 1";
 	$admins = $file_db->query($sql);
 	$admins->setFetchMode(PDO::FETCH_ASSOC);
 	$admins = $admins->fetch();
