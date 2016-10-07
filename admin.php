@@ -45,8 +45,9 @@
 			}
 		
 		
-
-
+		echo "<br/> Verif 1 : ".verifyId(1);
+		echo "<br/> Verif 2 : ".verifyId(2);
+		echo "<br/> Verif 2222 : ".verifyId(2222);
 
 		?>
 		<table class="table table-striped">

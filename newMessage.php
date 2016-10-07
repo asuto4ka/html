@@ -5,10 +5,7 @@
 	include("functions.php");
 
 
-   //On récupère qui seront les éxpéditeurs et les déstinataires
 	
-	
-	//TODO problèmes mémorisation message quand destinataire faux
 	// Requêtes sql avec prepared statment ci-dessous
 /*
 $smt = $db->prepare("insert into names (name, email) values (':name', ':email')");
@@ -17,9 +14,7 @@ $smt->bindValue(':email', $_POST['post_email'], SQLITE3_TEXT);
 
 $smt->execute();
 */
-	
-		
-	//$to = $_GET["message_receiver_id"];
+
 	$from = $_SESSION['userId'];
 
    

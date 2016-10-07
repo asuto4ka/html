@@ -2,7 +2,9 @@
 
 function verifyId($id){
 	global $file_db;
-	$sql = "SELECT * from users WHERE user_id = ". $id;
+	//TODO use prepared statment
+	$sql = "SELECT * from users WHERE user_id = ". $id ." AND user_deleted = NULL";
+	echo "[debug sql]" .$sql;
 	$result = $file_db->query($sql);
 	$result->setFetchMode(PDO::FETCH_ASSOC);
 	print_r($result);
@@ -77,6 +79,7 @@ function sendMessage($userIdTo, $subject, $message){
 
 function getUserState($userId){
 	global $file_db;
+	//TODO user prepared statment
 	$sql = "SELECT user_active FROM users WHERE user_id = " . $userId;
 	$state =  $file_db->query($sql);
 	$state->setFetchMode(PDO::FETCH_ASSOC);		
@@ -87,15 +90,17 @@ function getUserState($userId){
 	
 function setUserState($userId, $state){
 	global $file_db;
+	//TODO user prepared statment
 	$sql = "UPDATE users SET user_active = " . $state ." WHERE user_id = " . $userId;
 	echo "<br/>[debug] setUserState request: " . $sql;
 	$file_db->exec($sql);
 	echo "<br/>[debug] request done";
 	return;
 }
-//TODO
+
 function getUserRole($userId){
 	global $file_db;
+	//TODO use prepared statment
 	$sql = "SELECT user_role FROM users WHERE user_id = " . $userId;
 	$role =  $file_db->query($sql);
 	print_r($role);
@@ -105,7 +110,6 @@ function getUserRole($userId){
 	return $role;
 }
 
-//TODO - pas fini à vérifier !!!
 function getNumberOfAdmin(){
 	global $file_db;
 	$sql = "SELECT count(user_role) as nb FROM users GROUP BY user_role HAVING user_role = 1 AND user_active = 1";
@@ -115,9 +119,10 @@ function getNumberOfAdmin(){
 	return $admins['nb'];
 }
 
-//TODO
+
 function setUserRole($userId, $role){
 	global $file_db;
+	//TODO user prepared statment
 	$sql = "UPDATE users SET user_role = " . $role ." WHERE user_id = " . $userId;
 	echo "<br/>[debug] setUserRole request: " . $sql;
 	$file_db->exec($sql);

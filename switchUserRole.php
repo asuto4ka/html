@@ -8,7 +8,11 @@
 		
 		//TODO vérifier validité userId dans la db
 		$userId = $_GET['user'];
-		if(!verifyId($userId)){header("Location: http://localhost/admin.php?msg=noUser");exit();}		
+		if(!verifyId($userId)){
+			//header("Location: http://localhost/admin.php?msg=noUser");
+			//exit();
+			echo "user not verified";
+		}		
 		
 		$nbAdmins = getNumberOfAdmin();
 		$userRole = getUserRole($userId);
