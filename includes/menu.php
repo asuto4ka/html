@@ -1,8 +1,8 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="messages.php">
-				Inbox de <?php echo $_SESSION['userName']; ?>
+				Inbox 
 			  </a>
 			</div>
 			<div class="navbar-header">
@@ -11,7 +11,7 @@
 			  </a>
 			</div>
 			<div class="navbar-header">
-			  <a class="navbar-brand" href="changePassword.php">
+			  <a class="navbar-brand" href="changeOwnPassword.php">
 				Change password
 			  </a>
 			</div>
@@ -31,5 +31,6 @@
 			
 			
 			?>
+			<p class="navbar-text  navbar-right">Signed in as <?php echo $_SESSION['userName']; ?></p>
 		  </div>
 		</nav>

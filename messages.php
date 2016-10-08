@@ -18,13 +18,14 @@
 	
 	<body>  
 
-		<h1>STI Messenger - Boîte de réception</h1>
-
-		<p><p>
+		
 		
 		<?php
 			include("includes/menu.php");
 		?>
+		<h1>STI Messenger - Boîte de réception</h1>
+
+		
 		
 		<?php
 			// Messages de confirmation de suppression de messages etc
@@ -87,7 +88,7 @@
 					<?php echo "<td>" . $row['message_time'] . "</td>"; ?>
 					<?php echo "<td>" . $name['user_name'] . "</td>"; ?>
 					<?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-					<?php echo "<td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a></td>"; ?>
+					<?php echo "<td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "&message_subject=". $row['message_subject'] ."\"> Reply </a></td>"; ?>
 					<?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?messageId=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
 					<?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>";?>
 					
@@ -132,7 +133,7 @@
 
 				?>
 		
-		
+				<?php include("includes/footer.php"); ?>
 		
 	</body>
 

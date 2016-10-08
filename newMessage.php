@@ -98,17 +98,16 @@ $smt->execute();
 	<h1>STI Write a new message</h1>
 	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
 		
-		<?php 
-			
-		?>
+		
 
          	<div class="form-group">
     			<label for="email">To:</label> 
 			<input type="text" name="form_to" id="form_to" placeholder="To" value="<?php if(isset($_GET['message_receiver_id'])){echo getUserName($_GET['message_receiver_id']);} ?>"/>
 		</div>
 		<div class="form-group">
+			<!--  Récupère le sujet du message auquel on répond TODO sécuriser le get !!!  -->
     			<label for="email">Subject:</label> 
-			<input type="text" name="form_subject" id="form_subject" placeholder="Subject" value="<?php echo $subjectbkp; ?>"/>
+			<input type="text" name="form_subject" id="form_subject" placeholder="Subject" value="<?php if(isset($_GET['message_subject'])){ echo "re: " .$_GET['message_subject'];	}else{ echo $subjectbkp;};	?>"/>
 		</div>
             		<textarea class="form-control" rows="5" type="text" name="form_message" id="form_message" placeholder="Type your message here" ><?php echo $messagebkp; ?></textarea>
             	<br>
@@ -122,6 +121,7 @@ $smt->execute();
          
       	</form>
 	</div>
+	<?php include("includes/footer.php"); ?>
 
    </body>
 </html>

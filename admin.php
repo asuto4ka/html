@@ -18,12 +18,12 @@
 	</head>
 
 	<body>  
-
-
-		<h1>STI Administrator page</h1>
 		<?php
 			include("includes/menu.php");
-		?>	  
+		?>
+
+		<h1>STI Administrator page</h1>
+			  
 		<h2></h2>
 		<?php
 			$users = getUsers();
@@ -81,7 +81,7 @@
 			?>
 		</table>
 		<a class="btn btn-primary" href="newUser.php"> Register new user </a>
-	
+		<?php include("includes/footer.php"); ?>
 	
 	
 	</body>

@@ -26,19 +26,9 @@
    </head>
 
    <body>  
-
+	<?php include("includes/menu.php"); ?>
       <h1>STI Messenger</h1>
-      <p></p>
 
-      <nav class="navbar navbar-default">
-         <div class="container-fluid">
-	    <div class="navbar-header">
-	       <a class="navbar-brand" href="admin.php">
-	          Home
-	       </a>
-	    </div>
-         </div>
-      </nav>
       
       <h2><?php echo $_SESSION['userName'];?>, you can change <?php echo $userName;?>'s password here !</h2>
 
@@ -92,6 +82,6 @@
          }
       
       ?>     
-
+	<?php include("includes/footer.php"); ?>
    </body>
 </html>

@@ -13,47 +13,46 @@
 
       <meta charset="utf-8" />      
 
-      <link href="./css/style.php" rel="stylesheet" media="all" type="text/css">
-
-      <!-- Bootstrap -->
-      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <?php
+		include("includes/header.php");
+	?>
 
       <title>Change password</title>
       
    </head>
 
    <body>  
-
-      <h1>STI Messenger</h1>
-      <p></p>
-
-      <nav class="navbar navbar-default">
-         <div class="container-fluid">
-	    <div class="navbar-header">
-	       <a class="navbar-brand" href="home.php">
-	          Home
-	       </a>
-	    </div>
-         </div>
-      </nav>
-      
-      <h2><?php echo $_SESSION['userName'];?>, you can change your password here !</h2>
+	
+	<?php
+			include("includes/menu.php");
+		?>
+	<div class="container">
+		<h1>STI Messenger</h1>
+      		<h2><?php echo $_SESSION['userName'];?>, you can change your password here !</h2>
+	</div>
 
       <form method="post">  
+
          
          <div class="container">
+		<div class="form-group">
             <input type="password" name="oldPassword" id="oldPassword" placeholder="Old password"/>
-            <br>
+		</div>
+		<div class="form-group">
             <input type="password" name="newPassword" id="newPassword" placeholder="New password"/>
             <br>
-            <input type="password" name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm your new password"/>
+            <input type="password" name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm new password"/>
+		</div>
          </div>
+	</div>
          
          <br>
          
          <div class="container">
+	<div class="form-group">
             <input type="submit" class="btn" name="changePasswordBtn" value="Change my password">  
          </div>
+	</div>
          
       </form>
 
@@ -113,6 +112,6 @@
          }
 
       ?>     
-
+		<?php include("includes/footer.php"); ?>
    </body>
 </html>

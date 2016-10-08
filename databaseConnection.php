@@ -14,7 +14,7 @@
       // Set errormode to exceptions
       $file_db->setAttribute(PDO::ATTR_ERRMODE, 
                              PDO::ERRMODE_EXCEPTION);
-      echo "[DEBUG] Database connected !";
+      //echo "[DEBUG] Database connected !";
    }
 
    catch(PDOException $e) {
