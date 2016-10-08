@@ -2,7 +2,7 @@
 		  <div class="container-fluid">
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="messages.php">
-				Inbox
+				Inbox de <?php echo $_SESSION['userName']; ?>
 			  </a>
 			</div>
 			<div class="navbar-header">

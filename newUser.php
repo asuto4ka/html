@@ -76,7 +76,7 @@
                
                  if($result['user_id']) {
 
-                    echo "<h2>This username is not available !</h2>";
+                    echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong> This username is not available ! Choose another one ! </div></div>";
                  }
                  else {
                     
@@ -100,6 +100,7 @@
                           $result = $file_db->query($sql);  
 
                           echo "<h2>New user created successfully !</h2>";
+			  header("Location: http://localhost/admin.php?msg=created");
                        }
                        else {
                           echo "<h2>Password and confirmation password must match !</h2>";

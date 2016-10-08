@@ -110,8 +110,8 @@
  
     foreach ($users as $u) {
         // $formatted_time = date('Y-m-d H:i:s', $m['time']);
-        $file_db->exec("INSERT INTO users (user_name, user_pwd_hash, user_role, user_active)
-                VALUES ('{$u['user_name']}', '{$u['user_pwd_hash']}', '{$u['user_role']}', '{$u['user_active']}')");
+        $file_db->exec("INSERT INTO users (user_name, user_pwd_hash, user_role, user_active, user_deleted)
+                VALUES ('{$u['user_name']}', '{$u['user_pwd_hash']}', '{$u['user_role']}', '{$u['user_active']}', '{$u['user_deleted']}')");
     }
 
     foreach ($messages as $m) {

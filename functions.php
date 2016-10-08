@@ -1,9 +1,14 @@
 <?php
 
+/*
+	Vérifie qu'un id correspond bien à un utilisateur non supprimé
+	Paramètre: $id
+
+*/
 function verifyId($id){
 	global $file_db;
 	//TODO use prepared statment
-	$sql = "SELECT * from users WHERE user_id = ". $id ." AND user_deleted = NULL";
+	$sql = "SELECT * from users WHERE user_id = ". $id ." AND user_deleted = 0";
 	echo "[debug sql]" .$sql;
 	$result = $file_db->query($sql);
 	$result->setFetchMode(PDO::FETCH_ASSOC);
@@ -14,6 +19,11 @@ function verifyId($id){
 	else{return true;}
 }
 
+/*
+	Récupère le nom d'utilisateur à partir de l'id
+	Paramètre: $id
+
+*/
 function getUserName($id){
 	global $file_db;
 	//TODO use prepared statment 
@@ -26,8 +36,13 @@ function getUserName($id){
 	return $name;
 }
 
+
+/*
+	Récupère les utilisateurs non supprimés
+	Paramètre: aucun
+*/
 function getUsers(){
-	$sql = "SELECT * FROM users";
+	$sql = "SELECT * FROM users WHERE user_deleted = 0";
 	//echo "<br/>[debug]". $sql;
        	global $file_db;
        	$result =  $file_db->query($sql);
@@ -39,10 +54,14 @@ function getUsers(){
 }
 
 
+/*
+	Récupère l'id d'un utilisateur à partir de son nom
+	Paramètre: $name
+*/
 function getUserId($name){
 	global $file_db;
 	//TODO use prepared statment
-	$sql = "SELECT user_id FROM users WHERE user_name = '" . $name . "'";
+	$sql = "SELECT user_id FROM users WHERE user_name = '" . $name . "' AND user_deleted = 0";
 	//echo "<br/>[debug] sql: ". $sql;
 	$id =  $file_db->query($sql);
 	
@@ -62,6 +81,11 @@ function getUserId($name){
 	}
 }
 
+/*
+	Envoie un message
+	Paramètres: $UserIdTo (id du destinataire), $subject (sujet du message), $message (message)
+	Remarque: l'id de l'expéditeur est obtenue ci-dessous par la variable session !!!
+*/
 function sendMessage($userIdTo, $subject, $message){
 	// Enregistre dans DB
 	echo "<br/>[debug] Saving message in database";
@@ -77,6 +101,10 @@ function sendMessage($userIdTo, $subject, $message){
 	return;
 }
 
+/*
+	Récupère l'état de l'utilisateur (actif ou non)
+	Paramètre: $userId
+*/
 function getUserState($userId){
 	global $file_db;
 	//TODO user prepared statment
@@ -87,7 +115,11 @@ function getUserState($userId){
 	$state = $state['user_active'];		
 	return $state;
 }
-	
+
+/*
+
+
+*/
 function setUserState($userId, $state){
 	global $file_db;
 	//TODO user prepared statment
@@ -98,6 +130,10 @@ function setUserState($userId, $state){
 	return;
 }
 
+/*
+
+
+*/
 function getUserRole($userId){
 	global $file_db;
 	//TODO use prepared statment
@@ -110,6 +146,10 @@ function getUserRole($userId){
 	return $role;
 }
 
+/*
+	Récupère le nombre d'adimistrateurs
+	Paramètre: aucun
+*/
 function getNumberOfAdmin(){
 	global $file_db;
 	$sql = "SELECT count(user_role) as nb FROM users GROUP BY user_role HAVING user_role = 1 AND user_active = 1";
@@ -120,6 +160,10 @@ function getNumberOfAdmin(){
 }
 
 
+/*
+ 	Définit le rôle de l'utilisateur (user / admin) -> (0/1)
+	Paramètres: Id de l'utilisateur, 0 si user et 1 si admin
+*/
 function setUserRole($userId, $role){
 	global $file_db;
 	//TODO user prepared statment

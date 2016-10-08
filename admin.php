@@ -21,7 +21,9 @@
 
 
 		<h1>STI Administrator page</h1>
-					  
+		<?php
+			include("includes/menu.php");
+		?>	  
 		<h2></h2>
 		<?php
 			$users = getUsers();
@@ -41,13 +43,15 @@
 				else if($_GET['msg'] == "oneAdmin"){
 					echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> There must be at least one administrator. </div></div>";
 				}
+				else if($_GET['msg'] == "created"){
+					echo "<div class=\"container\"><div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Yeah !</strong> User created successfully ! </div></div>";
+				}
+				else if($_GET['msg'] == "deleted"){
+					echo "<div class=\"container\"><div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Yeah !</strong> User deleted successfully ! </div></div>";
+				}
 				
 			}
 		
-		
-		echo "<br/> Verif 1 : ".verifyId(1);
-		echo "<br/> Verif 2 : ".verifyId(2);
-		echo "<br/> Verif 2222 : ".verifyId(2222);
 
 		?>
 		<table class="table table-striped">
