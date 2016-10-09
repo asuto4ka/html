@@ -1,21 +1,29 @@
 <?php
+   /*
+     ---------------------------------------------------------------------------
+     Projet      : STI Messenger
+     Fichier     : index.php
+     Auteurs     : Thibault Schowing, Sébastien Henneberger
+     Date        : 12.10.2016
+     Description : Page d'accueil de l'application web.
+                   Permet uniquement à un utilisateur de s'authentifier.
+     ---------------------------------------------------------------------------
+    */
+?>
+
+<?php
    session_start();
    require('password.php');
    include("databaseConnection.php");
 ?>
 
 <!DOCTYPE HTML> 
- 
+
 <html>
-
    <head>
-
       <meta charset="utf-8" />      
-
       <link href="./css/style.php" rel="stylesheet" media="all" type="text/css">
-
       <title>STI Messenger</title>
-      
    </head>
 
    <body>  
@@ -23,19 +31,15 @@
       <h2>Please, Log In to enjoy !</h2>
 
       <form method="post">  
-         
          <div class="container">
             <input type="text" name="userName" id="userName" placeholder="Username"/>
             <br>
             <input type="password" name="userPwd" id="userPassword" placeholder="Password"/>
          </div>
-         
          <br>
-         
          <div class="container">
             <input type="submit" class="btn" name="logInBtn" value="Log in">  
          </div>
-         
       </form>
 
       <?php
@@ -54,13 +58,13 @@
                $result = $file_db->query($sql);
                $result->setFetchMode(PDO::FETCH_ASSOC);
                $result = $result->fetch();
-               
+
                // Check if user exists
-               if($result['user_id']) {
+               if ($result['user_id']) {
 
                   // Check if user isn't deleted
                   if ($result['user_deleted'] != 1) {
-                     
+
                      // Check if user is active
                      $userActive = $result['user_active'];
                      if ($userActive != 0) {
@@ -77,24 +81,19 @@
 
                            header('Location: http://localhost/home.php');
                            exit();
-                        }
-                        else {
+                        } else {
                            echo '<h2>Username and/or password entered are incorrect !</h2>';
-          
                         }
-                     }
-                     else {
+                     } else {
                         echo '<h2>Account desactivated, contact your administrator !</h2>';
                      }
-                  }
-                  else {
+                  } else {
                      echo '<h2>Username and/or password entered are incorrect !</h2>';
                   }
                }
             }
          }
-
       ?>
-	<?php include("includes/footer.php"); ?>
+      <?php include("includes/footer.php"); ?>
    </body>
 </html>

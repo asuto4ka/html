@@ -1,4 +1,16 @@
 <?php
+   /*
+     ---------------------------------------------------------------------------
+     Projet      : STI Messenger
+     Fichier     : checkAdminSession.php
+     Auteurs     : Thibault Schowing, Sébastien Henneberger
+     Date        : 12.10.2016
+     Description : Permet de vérifier si l'utilisateur authentifié est admin.
+                   S'il s'agit d'un utilisateur, il sera redirigé à la page de
+                   login.
+     ---------------------------------------------------------------------------
+    */
+
    session_start();
    // Check if admin session exists
    if (!isset($_SESSION['userRole']) || $_SESSION['userRole'] != 1) {
@@ -6,4 +18,3 @@
       exit();
    }
 ?>
-

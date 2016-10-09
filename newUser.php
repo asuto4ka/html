@@ -1,122 +1,119 @@
 <?php
-   	session_start(); 
-        include("checkAdminSession.php");
-	include("databaseConnection.php");
-	include("functions.php"); 
-        include("password.php");  
+   /*
+     ---------------------------------------------------------------------------
+     Projet      : STI Messenger
+     Fichier     : newUser.php
+     Auteurs     : Thibault Schowing, Sébastien Henneberger
+     Date        : 12.10.2016
+     Description : Page permettant à un admin de créer un nouvel utilisateur.
+     ---------------------------------------------------------------------------
+    */
+?>
+
+<?php
+   session_start();
+   include("checkAdminSession.php");
+   include("databaseConnection.php");
+   include("functions.php");
+   include("password.php");
 ?>
 
 <!DOCTYPE HTML> 
- 
+
 <html>
-
    <head>
-      
-      <?php include("includes/header.php"); ?>
-
+       <?php include("includes/header.php"); ?>
    </head>
 
    <body>  
-	
-	<?php include("includes/menu.php");?>	  
-	
-	<div class="container">
-	<h1>STI Create a new user</h1>
-	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
+       <?php include("includes/menu.php"); ?>	  
 
-         	<div class="form-group">
-    			<!-- <label for="form_name">Name</label> <br/> -->
-			<input type="text" name="userName" id="form_name" placeholder="Username"/>
-			</br>
-                        </br>
-			<!-- <label for="form_newPassword">Password</label> -->
-                        
-		        <input type="password" name="userPassword" id="form_newPassword" placeholder="Password"/>
-		        </br>
-                        </br>
-			<!-- <label for="form_confirmNewPassword">Confirm Password</label><br/> -->
-		        <input type="password" name="confirmationPassword" id="form_confirmNewPassword" placeholder="Confirm password"/>
-               		</br>
-                        </br>
-			
-			Admin <Input type = 'Radio' Name = 'role' value = 'Admin'>
-                        &nbsp;
-                        User <Input type = 'Radio' Name = 'role' value = 'User'>
+      <div class="container">
+         <h1>STI Create a new user</h1>
+         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
 
-		</div>
-         
-         	<br>
-         
-         	<div class="container">
-           		<input type="submit" class="btn" name="createUserBtn" value="Create user">  
-         	</div>
-         
-      	</form>
-	</div>
+            <div class="form-group">
+               <!-- <label for="form_name">Name</label> <br/> -->
+               <input type="text" name="userName" id="form_name" placeholder="Username"/>
+               </br>
+               </br>
+               <!-- <label for="form_newPassword">Password</label> -->
 
-        <?php
-           $createUserBtn = isset($_POST['createUserBtn']) ? $_POST['createUserBtn'] : NULL;
+               <input type="password" name="userPassword" id="form_newPassword" placeholder="Password"/>
+               </br>
+               </br>
+               <!-- <label for="form_confirmNewPassword">Confirm Password</label><br/> -->
+               <input type="password" name="confirmationPassword" id="form_confirmNewPassword" placeholder="Confirm password"/>
+               </br>
+               </br>
 
-           if ($createUserBtn) {
-              $userName = $userPassword = $confirmPassword = "";
+               Admin <Input type = 'Radio' Name = 'role' value = 'Admin'>
+               &nbsp;
+               User <Input type = 'Radio' Name = 'role' value = 'User'>
 
-              if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                 $userName = $_POST["userName"];
-                 $userPassword = $_POST["userPassword"];
-                 $confirmationPassword = $_POST['confirmationPassword'];
-                 $admin = $_POST["adminRole"];
-                 $user = $_POST["userRole"];
+            </div>
+            <br>
+            <div class="container">
+               <input type="submit" class="btn" name="createUserBtn" value="Create user">  
+            </div>
+         </form>
+      </div>
 
-                 // Check if user exists
-                 global $file_db;
-                 $sql = "SELECT user_id FROM users WHERE user_name = '$userName'";
-                 $result =  $file_db->query($sql);
-                 $result->setFetchMode(PDO::FETCH_ASSOC);
-                 $result = $result->fetch();
-               
-                 if($result['user_id']) {
+      <?php
+         $createUserBtn = isset($_POST['createUserBtn']) ? $_POST['createUserBtn'] : NULL;
 
-                    echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong> This username is not available ! Choose another one ! </div></div>";
-                 }
-                 else {
-                    
-                    // Check password length
-                    if ($userPassword != "") {
-                    
-                       // Check if password and confirmation password are identical
-                       if ($userPassword == $confirmationPassword) {
+         if ($createUserBtn) {
+            $userName = $userPassword = $confirmPassword = "";
 
-                          $userPasswordHash = password_hash($userPassword, PASSWORD_DEFAULT);
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+               $userName = $_POST["userName"];
+               $userPassword = $_POST["userPassword"];
+               $confirmationPassword = $_POST['confirmationPassword'];
+               $admin = $_POST["adminRole"];
+               $user = $_POST["userRole"];
 
-                          if ($admin == 'role') {
-                             $role = 1;
-                          }
-                          else {
-                             $role = 0;
-                          }
-                        
-                          $sql = "INSERT INTO users (user_name, user_pwd_hash, user_role, user_active, user_deleted)
+               // Check if user exists
+               global $file_db;
+               $sql = "SELECT user_id FROM users WHERE user_name = '$userName'";
+               $result = $file_db->query($sql);
+               $result->setFetchMode(PDO::FETCH_ASSOC);
+               $result = $result->fetch();
+
+               if ($result['user_id']) {
+
+                  echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong> This username is not available ! Choose another one ! </div></div>";
+               } else {
+
+                  // Check password length
+                  if ($userPassword != "") {
+
+                     // Check if password and confirmation password are identical
+                     if ($userPassword == $confirmationPassword) {
+
+                        $userPasswordHash = password_hash($userPassword, PASSWORD_DEFAULT);
+
+                        if ($admin == 'role') {
+                           $role = 1;
+                        } else {
+                           $role = 0;
+                        }
+
+                        $sql = "INSERT INTO users (user_name, user_pwd_hash, user_role, user_active, user_deleted)
                                                            VALUES ('$userName', '$userPasswordHash', '$role', '1', '0')";
-                          $result = $file_db->query($sql);  
+                        $result = $file_db->query($sql);
 
-                          echo "<h2>New user created successfully !</h2>";
-			  header("Location: http://localhost/admin.php?msg=created");
-                       }
-                       else {
-                          echo "<h2>Password and confirmation password must match !</h2>";
-                       }     
-                    }
-                    else {
-                       echo "<h2>Password must contain at least one caracter !</h2>";   
-                    }                
-
-                 }
-
-              }
-
-           }
-
-        ?>
-	<?php include("includes/footer.php"); ?>
+                        echo "<h2>New user created successfully !</h2>";
+                        header("Location: http://localhost/admin.php?msg=created");
+                     } else {
+                        echo "<h2>Password and confirmation password must match !</h2>";
+                     }
+                  } else {
+                     echo "<h2>Password must contain at least one caracter !</h2>";
+                  }
+               }
+            }
+         }
+      ?>
+      <?php include("includes/footer.php"); ?>
    </body>
 </html>
