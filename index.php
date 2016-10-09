@@ -91,6 +91,9 @@
                      echo '<h2>Username and/or password entered are incorrect !</h2>';
                   }
                }
+               else {
+                  echo "<h2>Username and/or password entered are incorrect !</h2>";
+               }
             }
          }
       ?>
