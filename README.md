@@ -22,29 +22,29 @@
 
   Once you're on the login screen, enter your credentials to access the home page. The home page will simply present the menu with the different pages you can access.
 
-  ![alt text](./img/user_login.png)
+  ![alt text](./img/user_login.PNG)
 
 2. Inbox
 
   This page contains all your received messages. For each message, you can see the sender, the subject and the options to apply to the message.
 
-    ![alt text](./img/user_home.png)
+    ![alt text](./img/user_home.PNG)
 
 3. Display the message
 
   To display or hide the message content, simply clic on <i>Display/hide</i>
 
-  ![alt text](./img/user_inbox.png)
+  ![alt text](./img/user_inbox.PNG)
 
   And after clic on <i>Display/hide</i>:
 
-  ![alt text](./img/user_display.png)
+  ![alt text](./img/user_display.PNG)
 
 4. Reply messages
 
   To reply to a message, clic on <i>Reply</i>. This will open the message creation interface and it will pre-complete the fields <i>To: </i> and <i>Subject</i> for you.
 
-  ![alt text](./img/user_reply.png)
+  ![alt text](./img/user_reply.PNG)
 
 5. Delete a message
 
@@ -58,7 +58,7 @@
 
   To change your password, go clic on <i>Change password</i> and fill the requested fields.
 
-  ![alt text](./img/user_password.png)
+  ![alt text](./img/user_password.PNG)
 
 ## Administrator manual
 
@@ -78,4 +78,4 @@ All pages are the same for the admin, except the <i>Administration page</i> that
 
   Once a user is deleted, you can no longer: create a user with the same name, send this user messages, re-create it etc. The deleted users don't appear in the users lists.
 
-![alt text](./img/admin_admin.png)
+![alt text](./img/admin_admin.PNG)
