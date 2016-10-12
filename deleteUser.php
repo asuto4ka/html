@@ -3,9 +3,9 @@
      ---------------------------------------------------------------------------
      Projet      : STI Messenger
      Fichier     : deleteUser.php
-     Auteurs     : Thibault Schowing, Sébastien Henneberger
+     Auteurs     : Thibault Schowing, SÃ©bastien Henneberger
      Date        : 12.10.2016
-                   Description : Permet à un administrateur de supprimer un
+                   Description : Permet Ã  un administrateur de supprimer un
                    utilisateur (administrateur compris).
                    Il doit toujours exister un administrateur actif.
                    Un administrateur ne peut supprimer son propre compte.
@@ -24,8 +24,7 @@
 
 <html>
    <head>
-      <meta charset="utf-8" />      
-      <link href="./css/style.php" rel="stylesheet" media="all" type="text/css">
+      <meta charset="utf-8" />
 
       <!-- Bootstrap -->
       <link href="css/bootstrap.min.css" rel="stylesheet">
