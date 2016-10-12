@@ -3,9 +3,9 @@
      ---------------------------------------------------------------------------
      Projet      : STI Messenger
      Fichier     : changeUserPassword.php
-     Auteurs     : Thibault Schowing, Sébastien Henneberger
+     Auteurs     : Thibault Schowing, SÃ©bastien Henneberger
      Date        : 12.10.2016
-     Description : Page permettant à un admin de changer le mot de passe d'un
+     Description : Page permettant Ã  un admin de changer le mot de passe d'un
                    utilisateur.
      ---------------------------------------------------------------------------
     */
@@ -27,8 +27,7 @@
 
    <head>
 
-      <meta charset="utf-8" />      
-      <link href="./css/style.php" rel="stylesheet" media="all" type="text/css">
+      <meta charset="utf-8" />
 
       <!-- Bootstrap -->
       <link href="css/bootstrap.min.css" rel="stylesheet">
