@@ -8,6 +8,7 @@
      Description : Permet d'initialiser la base de donnée avec des données
                    choisies.
      ---------------------------------------------------------------------------
+	 
     */
 ?>
 
@@ -24,7 +25,7 @@
 
          try {
             // Create (connect to) SQLite database in file
-            $file_db = new PDO('sqlite:/var/www/databases/database.sqlite');
+            $file_db = new PDO('sqlite:C:\wamp64\www\phpLiteAdmin_v1-9-6\database.sqlite');
             // Set errormode to exceptions
             $file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -114,7 +115,7 @@
             $file_db = null;
 
             // Add permissions to database.sqlite
-            chmod("/var/www/databases/database.sqlite", 0777);
+            //chmod("/var/www/databases/database.sqlite", 0777);
 
             echo "[DEBUG] Database connection closed ! </br>";
          } catch (PDOException $e) {
