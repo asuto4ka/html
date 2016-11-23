@@ -16,18 +16,19 @@
                      - getUserRole()
                      - getNumberOfAdmin()
                      - setUserRole()
+					 
+	Utile: http://php.net/manual/fr/mysqli-stmt.bind-param.php
      ---------------------------------------------------------------------------
     */
-?>
 
-<?php
 
    /*
      Vérifie qu'un id correspond bien à un utilisateur non supprimé
      Paramètre: $id
     */
 
-   function verifyId($id) {
+	
+   /* function verifyId($id) {
       global $file_db;
       //TODO use prepared statment
       $sql = "SELECT * from users WHERE user_id = " . $id . " AND user_deleted = 0";
@@ -42,14 +43,36 @@
       } else {
          return true;
       }
-   }
+   } */
+   
+    function verifyId($id){
+	   global $file_db;
+	   // Prepared statement, stage 1: prepare
+		$sql = "SELECT * from users WHERE user_id = :id AND user_deleted = 0";
+		
+		$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		
+		$sth->execute(array(':id' => $id));
+		
+		$result = $sth->fetchAll();
+		
+		print_r($result);
+		
+		if (empty($result)) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	   
+   } 
 
    /*
      Récupère le nom d'utilisateur à partir de l'id
      Paramètre: $id
     */
 
-   function getUserName($id) {
+   /* function getUserName($id) {
       global $file_db;
       //TODO use prepared statment 
       $sql = "SELECT user_name FROM users WHERE user_id = " . $id;
@@ -59,7 +82,23 @@
       $name = $name->fetch();
       $name = $name['user_name'];
       return $name;
-   }
+   } */
+   
+    function getUserName($id){
+	   global $file_db;
+	   
+		$sql = "SELECT user_name FROM users WHERE user_id = :id";
+	   
+		$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	   
+		$sth->execute(array(':id' => $id));
+		
+		$result = $sth->fetch(PDO::FETCH_ASSOC);
+		
+		
+		return $result['user_name'];
+   } 
+   
 
    /*
      Récupère les utilisateurs non supprimés

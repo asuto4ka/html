@@ -37,7 +37,7 @@
           if (isset($_POST['form_to'])) {
              //echo "<br/>[debug] Username from POST: " . $_POST['form_to'];
              $id = getUserId($_POST['form_to']);
-             //echo "<br/>[debug] User id with function: " . $id;
+             echo "<br/>[debug] User id with function: " . $id;
              //Vérifier si existe
 
              if ($id == false) {
@@ -105,6 +105,9 @@
                <input type="submit" class="btn" name="send" value="send">  
             </div>
          </form>
+		 <?php
+			var_dump(getUserName(3));
+		 ?>
       </div>
       <?php include("includes/footer.php"); ?>
    </body>

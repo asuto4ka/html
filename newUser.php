@@ -69,8 +69,11 @@
                $userName = $_POST["userName"];
                $userPassword = $_POST["userPassword"];
                $confirmationPassword = $_POST['confirmationPassword'];
-               $admin = $_POST["adminRole"];
-               $user = $_POST["userRole"];
+			   echo "<br/>[debug] post: ";
+			   print_r($_POST);
+               //$admin = $_POST["adminRole"];
+               //$user = $_POST["userRole"];
+			   $role = $_POST['role'];
 
                // Check if user exists
                global $file_db;
@@ -92,11 +95,11 @@
 
                         $userPasswordHash = password_hash($userPassword, PASSWORD_DEFAULT);
 
-                        if ($admin == 'role') {
+                        /*if ($admin == 'role') {
                            $role = 1;
                         } else {
                            $role = 0;
-                        }
+                        }*/
 
                         $sql = "INSERT INTO users (user_name, user_pwd_hash, user_role, user_active, user_deleted)
                                                            VALUES ('$userName', '$userPasswordHash', '$role', '1', '0')";
