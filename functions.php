@@ -47,7 +47,7 @@
    
     function verifyId($id){
 	   global $file_db;
-	   // Prepared statement, stage 1: prepare
+	   // Prepared statement
 		$sql = "SELECT * from users WHERE user_id = :id AND user_deleted = 0";
 		
 		$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -64,7 +64,6 @@
 			return true;
 		}
 		
-	   
    } 
 
    /*
@@ -93,6 +92,7 @@
 	   
 		$sth->execute(array(':id' => $id));
 		
+		// Résultats associatif -> par nom (je crois)
 		$result = $sth->fetch(PDO::FETCH_ASSOC);
 		
 		
@@ -105,7 +105,7 @@
      Paramètre: aucun
     */
 
-   function getUsers() {
+  /*  function getUsers() {
       $sql = "SELECT * FROM users WHERE user_deleted = 0";
       //echo "<br/>[debug]". $sql;
       global $file_db;
@@ -115,6 +115,18 @@
       //echo "<br/>[debug] result: ";
       //print_r( $result);
       return $result;
+   } */
+   
+   function getUsers(){
+		global $file_db;
+		$sql = "SELECT * FROM users WHERE user_deleted = 0";
+		$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	   
+		$sth->execute(array());
+		
+		// Le fetch se fait dans la page d'administration
+		return $sth;
+	   
    }
 
    /*
@@ -122,7 +134,7 @@
      Paramètre: $name
     */
 
-   function getUserId($name) {
+   /* function getUserId($name) {
       global $file_db;
       //TODO use prepared statment
       $sql = "SELECT user_id FROM users WHERE user_name = '" . $name . "' AND user_deleted = 0";
@@ -142,7 +154,29 @@
          echo "<br/>[debug] returning false, user id don't exist - fct = getUserId(name)";
          return false;
       }
-   }
+   } */
+   
+   
+    function getuserId($name){
+		global $file_db;
+		$sql = "SELECT user_id FROM users WHERE user_name = :name AND user_deleted = 0";
+		$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	   
+		$sth->execute(array(':name' => $name));
+		
+		// Résultats associatif -> par nom (je crois)
+		$result = $sth->fetch(PDO::FETCH_ASSOC);
+		
+		echo "<br/> debug: " . $result['user_id'];
+		
+		if(!empty($result['user_id'])){
+			return $result['user_id'];
+		}
+		else{
+			return false;
+		}
+		
+    }
 
    /*
      Envoie un message
