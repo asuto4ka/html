@@ -80,7 +80,7 @@
                $sql = "UPDATE users SET user_deleted = '1' WHERE user_id = '$userId'";
                $result = $file_db->query($sql);
                echo "<h2>User removed successfully !</h2>";
-               header("Location: http://localhost/admin.php?msg=deleted");
+               header("Location: http://localhost/html/admin.php?msg=deleted");
             }
          }
       ?>

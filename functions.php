@@ -87,13 +87,14 @@
       global $file_db;
       //TODO use prepared statment
       $sql = "SELECT user_id FROM users WHERE user_name = '" . $name . "' AND user_deleted = 0";
-      //echo "<br/>[debug] sql: ". $sql;
+      echo "<br/>[debug] sql: ". $sql;
       $id = $file_db->query($sql);
 
       $id->setFetchMode(PDO::FETCH_ASSOC);
       $id = $id->fetch();
+	  echo "<br/>[debug] in getuserId : ". $id['user_id'];
 
-      if (isset($id[user_id])) {
+      if (isset($id['user_id'])) {
          // row exists. do whatever you would like to do.
          $id = $id['user_id'];
          //echo "[debug] In getUserId -> " . $id;

@@ -103,7 +103,7 @@
                         $result = $file_db->query($sql);
 
                         echo "<h2>New user created successfully !</h2>";
-                        header("Location: http://localhost/admin.php?msg=created");
+                        header("Location: http://localhost/html/admin.php?msg=created");
                      } else {
                         echo "<h2>Password and confirmation password must match !</h2>";
                      }

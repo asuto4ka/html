@@ -113,7 +113,8 @@
 
             // Close file db connection
             $file_db = null;
-
+			
+			// TO CHANGE WHEN USE LINUX !!!
             // Add permissions to database.sqlite
             //chmod("/var/www/databases/database.sqlite", 0777);
 

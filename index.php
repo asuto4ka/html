@@ -78,7 +78,7 @@
                            $_SESSION['userId'] = $result['user_id'];
                            $_SESSION['userRole'] = $result['user_role'];
 
-                           header('Location: http://localhost/home.php');
+                           header('Location: http://localhost/html/home.php');
                            exit();
                         } else {
                            echo '<h2>Username and/or password entered are incorrect !</h2>';

@@ -31,7 +31,7 @@
 
       // Si c'est un admin, on ne change pas son role s'il est le seul
       if ($userRole == 1 && $nbAdmins <= 1) {
-         header("Location: http://localhost/admin.php?msg=oneAdmin");
+         header("Location: http://localhost/html/admin.php?msg=oneAdmin");
          exit();
       }
 
@@ -41,19 +41,19 @@
 
          if ($userRole == 1) {
             setUserRole($userId, 0);
-            header("Location: http://localhost/admin.php?msg=ok");
+            header("Location: http://localhost/html/admin.php?msg=ok");
             exit();
          } else {
             setUserRole($userId, 1);
-            header("Location: http://localhost/admin.php?msg=ok");
+            header("Location: http://localhost/html/admin.php?msg=ok");
             exit();
          }
       } else {
-         header("Location: http://localhost/admin.php?msg=self");
+         header("Location: http://localhost/html/admin.php?msg=self");
          exit();
       }
    } else {
-      header("Location: http://localhost/admin.php?msg=noUser");
+      header("Location: http://localhost/html/admin.php?msg=noUser");
       exit();
    }
 ?>

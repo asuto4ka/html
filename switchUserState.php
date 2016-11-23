@@ -19,6 +19,6 @@
       $userState = getUserState($userId);
       echo "<br/>[debug] user state for " . $userId . " = " . $userState;
       ($userState == 1) ? setUserState($userId, 0) : setUserState($userId, 1);
-      header("Location: http://localhost/admin.php");
+      header("Location: http://localhost/html/admin.php");
    }
 ?>

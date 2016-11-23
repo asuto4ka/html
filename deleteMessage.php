@@ -31,10 +31,10 @@
       $sql = "DELETE FROM messages where message_id = $messageId";
       $result = $file_db->query($sql);
 
-      header('Location: http://localhost/messages.php?result=deleted');
+      header('Location: http://localhost/html/messages.php?result=deleted');
       exit();
    } else {
-      header('Location: http://localhost/messages.php?result=notdeleted');
+      header('Location: http://localhost/html/messages.php?result=notdeleted');
       exit();
    }
 ?>

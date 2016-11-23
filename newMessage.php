@@ -28,6 +28,9 @@
    <body>  
        <?php
           include("includes/menu.php");
+		  
+		  $subjectbkp = "";
+          $messagebkp = "";
 
           // SI on a le NOM (username)  depuis POST
 
@@ -42,8 +45,7 @@
                 echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Unknown user !</strong> Please enter an existing user !</div></div>";
                 // backup message et sujet si username faux, permet de ne pas retaper le message
 
-                $subjectbkp = "";
-                $messagebkp = "";
+                
                 if (isset($_POST['form_message']) && !empty($_POST['form_message'])) {
                    $messagebkp = $_POST['form_message'];
                 }
@@ -61,7 +63,7 @@
                    // Securiser input TODO
                    // On a le destinataire et le message + sujet, on peut envoyer
                    sendMessage($id, $subject, $message);
-                   header("Location: http://localhost/messages.php");
+                   header("Location: http://localhost/html/messages.php");
                    exit();
                 } else {
                    //MESSAGE VIDE - bandeau d'erreur
