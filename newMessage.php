@@ -47,30 +47,30 @@
          
        ?>
 
-      <div class="container">
-         <h1>STI Write a new message</h1>
-         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
-            <div class="form-group">
-				<label for="email">To:	  
-			   
-					<select name="list_deroulante" size="1"> 
-						<?php
-						$users = getUsers(); 
-						while ($row = $users->fetch()) {?>
-							<option> 
+		<div class="container">
+			 <h1>STI Write a new message</h1>
+			 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
+				<div class="form-group">
+					<label for="email">To:	  
+				   
+						<select name="list_deroulante" size="1"> 
 							<?php
-								echo  $row['user_name']; ?>
-							</option>					
-							<?php
-						}					 
-						?>	
-						
-					</select>			
-				</label>			
-            </div>			  
-      </div>
-	  
-	  
+							$users = getUsers(); 
+							while ($row = $users->fetch()) {?>
+								<option> 
+								<?php
+									echo  $row['user_name']; ?>
+								</option>					
+								<?php
+							}					 
+							?>	
+							
+						</select>			
+					</label>			
+				</div>			  
+		
+		  
+		  
             <div class="form-group">
                <!--  Récupère le sujet du message auquel on répond TODO sécuriser le get !!!  -->
                <label for="email">Subject:</label> 
@@ -92,6 +92,7 @@
                <input type="submit" class="btn" name="send" value="send">  
             </div>
          </form>
+		 </div>
 		 
       </div>
       <?php include("includes/footer.php"); ?>
