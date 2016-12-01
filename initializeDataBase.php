@@ -25,7 +25,7 @@
 
          try {
             // Create (connect to) SQLite database in file
-            $file_db = new PDO('sqlite:C:\wamp\www\phpLiteAdmin_v1-9-6\database.sqlite');
+            $file_db = new PDO('sqlite:C:\wamp64\www\phpLiteAdmin_v1-9-6\database.sqlite');
             // Set errormode to exceptions
             $file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

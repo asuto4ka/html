@@ -28,8 +28,8 @@
 		*/
 	   
 		function verifyId($id){
-		   global $file_db;
-		   // Prepared statement
+			include("databaseConnection.php");
+			// Prepared statement
 			$sql = "SELECT * from users WHERE user_id = :id AND user_deleted = 0";
 			
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -38,7 +38,8 @@
 			
 			$result = $sth->fetchAll();
 			
-			print_r($result);
+			//print_r($result);
+			$file_db = null;
 			
 			if (empty($result)) {
 				return false;
@@ -54,7 +55,7 @@
 		*/
 	   
 		function getUserName($id){
-			global $file_db;
+			include("databaseConnection.php");
 		   
 			$sql = "SELECT user_name FROM users WHERE user_id = :id";
 		   
@@ -65,7 +66,7 @@
 			// Résultats associatif -> par nom (je crois)
 			$result = $sth->fetch(PDO::FETCH_ASSOC);
 			
-			
+			$file_db = null;
 			return $result['user_name'];
 	   } 
 	   
@@ -75,11 +76,12 @@
 		*/
 		
 		function getUserMessages($userId){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "SELECT * FROM messages WHERE message_receiver_id = :id ORDER BY message_time DESC";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		   
 			$sth->execute(array(':id' => $userId));
+			$file_db = null;
 			return $sth;
 			
 		}
@@ -91,12 +93,12 @@
 		*/
 	   
 	   function getUsers(){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "SELECT * FROM users WHERE user_deleted = 0";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		   
 			$sth->execute(array());
-			
+			$file_db = null;
 			// Le fetch se fait dans la page d'administration
 			return $sth;
 		   
@@ -109,7 +111,7 @@
 	   
 	   
 		function getuserId($name){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "SELECT user_id FROM users WHERE user_name = :name AND user_deleted = 0";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		   
@@ -118,8 +120,9 @@
 			// Résultats associatif -> par nom (je crois)
 			$result = $sth->fetch(PDO::FETCH_ASSOC);
 			
-			echo "<br/> debug: " . $result['user_id'];
+			//echo "<br/> debug: " . $result['user_id'];
 			
+			$file_db = null;
 			if(!empty($result['user_id'])){
 				return $result['user_id'];
 			}
@@ -139,7 +142,7 @@
 		*/
 	   
 	   function sendMessage($userIdTo, $subject, $message){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "INSERT INTO messages (message_subject, message_message, message_sender_id , message_receiver_id) VALUES (:subject, :message, :sender, :userIdTo);";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute(array(
@@ -148,7 +151,7 @@
 				':sender' => $_SESSION['userId'],
 				':userIdTo' => htmlspecialchars($userIdTo)
 			));
-				
+			$file_db = null;
 			return;
 	   }
 	   
@@ -160,7 +163,7 @@
 	   
 	   
 	   function getuserState($userId){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "SELECT user_active FROM users WHERE user_id = :id";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		   
@@ -169,8 +172,8 @@
 			// Résultats associatif -> par nom (je crois)
 			$result = $sth->fetch(PDO::FETCH_ASSOC);
 			
-			echo "<br/> debug: " . $result['user_active'];
-			
+			//echo "<br/> debug: " . $result['user_active'];
+			$file_db = null;
 			return $result['user_active'];
 		}
 		
@@ -180,7 +183,7 @@
 		*/
 		
 		function getUser($name){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "SELECT user_id, user_pwd_hash, user_role, user_active, user_deleted FROM users WHERE user_name = :name";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		   
@@ -189,8 +192,8 @@
 			// Résultats associatif -> par nom (je crois)
 			$result = $sth->fetch(PDO::FETCH_ASSOC);
 			
-			echo "<br/> debug: " . $result['user_active'];
-			
+			//echo "<br/> debug: " . $result['user_active'];
+			$file_db = null;
 			return $result;
 			
 		}
@@ -204,10 +207,12 @@
 		*/
 	   
 	   function setUserstate($userId, $state) {
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "UPDATE users SET user_active = :state WHERE user_id = :userId";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute(array(':state' => $state, ':userId' => $userId));
+			
+			$file_db = null;
 			return;
 	   }
 
@@ -218,7 +223,7 @@
 
 	   
 		function getUserRole($userId){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "SELECT user_role FROM users WHERE user_id = :id ";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		   
@@ -227,8 +232,8 @@
 			// Résultats associatif -> par nom (je crois)
 			$result = $sth->fetch(PDO::FETCH_ASSOC);
 			
-			echo "<br/> debug: " . $result['user_role'];
-			
+			//echo "<br/> debug: " . $result['user_role'];
+			$file_db = null;
 			return $result['user_role'];
 			
 		}
@@ -240,10 +245,12 @@
 
 		
 		function setUserRole($userId, $role){
-			global $file_db;
+			include("databaseConnection.php");
 			$sql = "UPDATE users SET user_role = :role WHERE user_id = :userId";
 			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute(array(':role' => $role, ':userId' => $userId));
+			
+			$file_db = null;
 			return;
 			
 		}
@@ -254,11 +261,13 @@
 		*/
 
 	   function getNumberOfAdmin() {
-		  global $file_db;
+		  include("databaseConnection.php");
 		  $sql = "SELECT count(user_role) as nb FROM users GROUP BY user_role HAVING user_role = 1 AND user_active = 1";
 		  $admins = $file_db->query($sql);
 		  $admins->setFetchMode(PDO::FETCH_ASSOC);
 		  $admins = $admins->fetch();
+		  
+		  $file_db = null;
 		  return $admins['nb'];
 	   }
 	   
@@ -279,6 +288,7 @@
 				'user_deleted' => htmlspecialchars($deleted)				
 				));
 			
+			$file_db = null;
 			return; 
 		}
 	   

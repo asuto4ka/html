@@ -15,7 +15,7 @@
    include("checkUserSession.php");
    include("databaseConnection.php");
    include("functions.php");
-   $from = $_SESSION['userId'];
+   //$from = $_SESSION['userId'];
 ?>
 
 <!DOCTYPE HTML> 
@@ -28,18 +28,14 @@
    <body>  
        <?php
           include("includes/menu.php");
-		  
-		  $subjectbkp = "";
-          $messagebkp = "";
-
-          // SI on a le NOM (username)  depuis POST
 
 	  
           if (isset($_POST['list_deroulante'])) {
                                       
 				$id = getUserId($_POST['list_deroulante']);				
 				$message = $_POST['form_message'];
-                $subject = $_POST['form_subject'];				
+                $subject = $_POST['form_subject'];	
+				echo "To: ". $id . " , message: " . $message . " , " . $subject;
 				sendMessage($id, $subject, $message);
                 header("Location: http://localhost/html/messages.php");
                 exit();
@@ -53,15 +49,25 @@
 				<div class="form-group">
 					<label for="email">To:	  
 				   
-						<select name="list_deroulante" size="1"> 
+						<select name="list_deroulante" size="1" class="form-control"> 
 							<?php
+							$replyTo = "";
+							$option = "";
+							if(isset($_GET['message_receiver_id']) && verifyId($_GET['message_receiver_id'])){
+								// c'est un reply -> on a le destinataire
+								$replyTo = getUserName($_GET['message_receiver_id']);
+							}
+							
 							$users = getUsers(); 
-							while ($row = $users->fetch()) {?>
-								<option> 
-								<?php
-									echo  $row['user_name']; ?>
-								</option>					
-								<?php
+							
+							while ($row = $users->fetch()) {
+							
+								// Si l'option de la liste = le destinataire "reply"
+								if($replyTo == $row['user_name']){
+									$option = "selected";
+								}
+								echo "<option ". $option . ">" . $row['user_name'] . "</option>"; 
+								$option = "";
 							}					 
 							?>	
 							
@@ -76,13 +82,11 @@
                <label for="email">Subject:</label> 
                <input type="text" name="form_subject" id="form_subject" placeholder="Subject" value="<?php
                   if (isset($_GET['message_subject'])) {
-                     echo "re: " . $_GET['message_subject'];
-                  } else {
-                     echo $subjectbkp;
-                  };
+                     echo "re: " . htmlspecialchars($_GET['message_subject']);
+                  } 
                ?>"/>
             </div>
-            <textarea class="form-control" rows="5" type="text" name="form_message" id="form_message" placeholder="Type your message here" ><?php echo $messagebkp; ?></textarea>
+            <textarea class="form-control" rows="5" type="text" name="form_message" id="form_message" placeholder="Type your message here" ></textarea>
             <br>
             </div>
 

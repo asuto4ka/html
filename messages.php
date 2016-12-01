@@ -47,7 +47,7 @@
 
 	  <?php
 		 // take user messages
-		 $userId = $_SESSION['userId'];
+		 $userId = $_SESSION['userId'];     
 		 $result = getuserMessages($userId);
 		 
 		 print_r($result);
@@ -83,9 +83,9 @@
 				   <?php echo "<td>" . $row['message_time'] . "</td>"; ?>
 				   <?php echo "<td>" . $name . "</td>"; ?>
 				   <?php echo "<td>" . $row['message_subject'] . "</td>"; ?>
-				   <?php echo "<td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "&message_subject=" . $row['message_subject'] . "\"> Reply </a></td>"; ?>
-				   <?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?messageId=" . $row['message_id'] . "\"> Delete </a></td>"; ?>
-				   <?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>"; ?>
+				   <?php echo "<td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . htmlspecialchars($row['message_sender_id']) . "&message_subject=" . htmlspecialchars($row['message_subject']) . "\"> Reply </a></td>"; ?>
+				   <?php echo "<td><a class=\"btn btn-primary\" href=\"deleteMessage.php?messageId=" . htmlspecialchars($row['message_id']) . "\"> Delete </a></td>"; ?>
+				   <?php echo "<td><button data-toggle=\"collapse\" data-target=\"#message" . htmlspecialchars($row['message_id']) . "\"> Display / Hide </button></td>"; ?>
 
 			   </tr>
 
@@ -115,7 +115,7 @@
 				  <?php echo "<table class=\"table table-bordered\"><tr class=\"active\"><td>From: " . $name . "</td></tr>"; ?>
 				  <?php echo "<tr class=\"active\"><td>" . $row['message_subject'] . "</td>"; ?>
 				  <?php echo "<tr class=\"info\"><td>" . $row['message_message'] . "</td>"; ?>
-				  <?php echo "<tr class=\"info\"><td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "\"> Reply </a> "; ?>
+				  <?php echo "<tr class=\"info\"><td><a class=\"btn btn-primary\" href=\"newMessage.php?message_receiver_id=" . $row['message_sender_id'] . "&message_subject=" . $row['message_subject'] . "\"> Reply </a> "; ?>
 				  <?php echo "<a class=\"btn btn-primary\" href=\"deleteMessage.php?messageId=" . $row['message_id'] . "\"> Delete </a>"; ?>
 				  <?php echo "<button data-toggle=\"collapse\" data-target=\"#message" . $row['message_id'] . "\"> Display / Hide </button></td>"; ?>
 				  <?php echo "</tr>"; ?>
