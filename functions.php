@@ -54,7 +54,7 @@
 		*/
 	   
 		function getUserName($id){
-		   global $file_db;
+			global $file_db;
 		   
 			$sql = "SELECT user_name FROM users WHERE user_id = :id";
 		   
@@ -68,6 +68,21 @@
 			
 			return $result['user_name'];
 	   } 
+	   
+		/*
+		
+		
+		*/
+		
+		function getUserMessages($userId){
+			global $file_db;
+			$sql = "SELECT * FROM messages WHERE message_receiver_id = :id ORDER BY message_time DESC";
+			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		   
+			$sth->execute(array(':id' => $userId));
+			return $sth;
+			
+		}
 	   
 
 	   /*

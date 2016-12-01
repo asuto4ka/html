@@ -24,23 +24,26 @@
    <head>
       <meta charset="utf-8" />      
       <title>STI Messenger</title>
+	<?php include("includes/header.php"); ?>
    </head>
 
    <body>  
-      <h1>STI Messenger</h1>
-      <h2>Please, Log In to enjoy !</h2>
-
-      <form method="post">  
-         <div class="container">
-            <input type="text" name="userName" id="userName" placeholder="Username"/>
-            <br>
-            <input type="password" name="userPwd" id="userPassword" placeholder="Password"/>
-         </div>
-         <br>
-         <div class="container">
-            <input type="submit" class="btn" name="logInBtn" value="Log in">  
-         </div>
-      </form>
+      
+		<div class="container">
+			<h1>STI Messenger</h1>
+			<h2>Please, Log In to enjoy !</h2>
+			<form method="post">  
+				<div class="container">
+					<input type="text" name="userName" id="userName" placeholder="Username"/>
+					<br>
+					<input type="password" name="userPwd" id="userPassword" placeholder="Password"/>
+				</div>
+				<br>
+				<div class="container">
+					<input type="submit" class="btn" name="logInBtn" value="Log in">  
+				</div>
+			</form>
+		</div>
 
       <?php
          $logInBtn = isset($_POST['logInBtn']) ? $_POST['logInBtn'] : NULL;
@@ -80,17 +83,17 @@
                            header('Location: http://localhost/html/home.php');
                            exit();
                         } else {
-                           echo '<h2>Username and/or password entered are incorrect !</h2>';
+						   echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  Username and/or password entered are incorrect ! </div></div>";
                         }
                      } else {
-                        echo '<h2>Account desactivated, contact your administrator !</h2>';
+						echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  <h2>Account desactivated, contact your administrator !</div></div>";
                      }
                   } else {
-                     echo '<h2>Username and/or password entered are incorrect !</h2>';
+					 echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  User have been deleted ! Go away ! </div></div>";
                   }
                }
                else {
-                  echo "<h2>Username and/or password entered are incorrect !</h2>";
+				  echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  Username and/or password entered are incorrect ! </div></div>";
                }
             }
          }
