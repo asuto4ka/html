@@ -14,6 +14,7 @@
 <?php
    session_start();
    require('password.php');
+   include('functions.php');
    include("databaseConnection.php");
 ?>
 
@@ -52,11 +53,9 @@
                $userPwd = $_POST["userPwd"];
 
                // Check if user exists in DB
-               $sql = "SELECT user_id, user_pwd_hash, user_role, user_active, user_deleted FROM users WHERE user_name = '$userName'";
-               global $file_db;
-               $result = $file_db->query($sql);
-               $result->setFetchMode(PDO::FETCH_ASSOC);
-               $result = $result->fetch();
+               
+			   
+			   $result = getUser($userName);
 
                // Check if user exists
                if ($result['user_id']) {
