@@ -34,56 +34,43 @@
 
           // SI on a le NOM (username)  depuis POST
 
-          if (isset($_POST['form_to'])) {
-             //echo "<br/>[debug] Username from POST: " . $_POST['form_to'];
-             $id = getUserId($_POST['form_to']);
-             echo "<br/>[debug] User id with function: " . $id;
-             //Vérifier si existe
-
-             if ($id == false) {
-                // FALSE USER NAME - bandeau d'erreur
-                echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Unknown user !</strong> Please enter an existing user !</div></div>";
-                // backup message et sujet si username faux, permet de ne pas retaper le message
-
-                
-                if (isset($_POST['form_message']) && !empty($_POST['form_message'])) {
-                   $messagebkp = $_POST['form_message'];
-                }
-
-                if (isset($_POST['form_subject']) && !empty($_POST['form_subject'])) {
-                   $subjectbkp = $_POST['form_subject'];
-                }
-             } else {
-                //echo "<br/>[debug] User id : " . $id;
-                //Si on a un message et sujet
-                if (isset($_POST['form_message']) && !empty($_POST['form_message']) && isset($_POST['form_subject']) && !empty($_POST['form_subject'])) {
-                   $message = $_POST['form_message'];
-                   $subject = $_POST['form_subject'];
-
-                   // Securiser input TODO
-                   // On a le destinataire et le message + sujet, on peut envoyer
-                   sendMessage($id, $subject, $message);
-                   header("Location: http://localhost/html/messages.php");
-                   exit();
-                } else {
-                   //MESSAGE VIDE - bandeau d'erreur
-                   echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Message Empty!</strong> Please fill the message field before sending it.</div></div>";
-                }
-             }
-          }
+	  
+          if (isset($_POST['list_deroulante'])) {
+                                      
+				$id = getUserId($_POST['list_deroulante']);				
+				$message = $_POST['form_message'];
+                $subject = $_POST['form_subject'];				
+				sendMessage($id, $subject, $message);
+                header("Location: http://localhost/html/messages.php");
+                exit();
+			}
+         
        ?>
 
       <div class="container">
          <h1>STI Write a new message</h1>
          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
             <div class="form-group">
-               <label for="email">To:</label> 
-               <input type="text" name="form_to" id="form_to" placeholder="To" value="<?php
-                  if (isset($_GET['message_receiver_id'])) {
-                     echo getUserName($_GET['message_receiver_id']);
-                  }
-               ?>"/>
-            </div>
+				<label for="email">To:	  
+			   
+					<select name="list_deroulante" size="1"> 
+						<?php
+						$users = getUsers(); 
+						while ($row = $users->fetch()) {?>
+							<option> 
+							<?php
+								echo  $row['user_name']; ?>
+							</option>					
+							<?php
+						}					 
+						?>	
+						
+					</select>			
+				</label>			
+            </div>			  
+      </div>
+	  
+	  
             <div class="form-group">
                <!--  Récupère le sujet du message auquel on répond TODO sécuriser le get !!!  -->
                <label for="email">Subject:</label> 
@@ -105,9 +92,7 @@
                <input type="submit" class="btn" name="send" value="send">  
             </div>
          </form>
-		 <?php
-			var_dump(getUserName(3));
-		 ?>
+		 
       </div>
       <?php include("includes/footer.php"); ?>
    </body>
