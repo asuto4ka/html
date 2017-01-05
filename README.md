@@ -79,3 +79,11 @@ All pages are the same for the admin, except the <i>Administration page</i> that
   Once a user is deleted, you can no longer: create a user with the same name, send this user messages, re-create it etc. The deleted users don't appear in the users lists.
 
 ![alt text](./img/admin_admin.PNG)
+
+# Web site security remarks
+
+For all of the security features we suppose that the site is running under an SSL connection.
+
+## Sanitizing user inputs
+
+## CSRF Tokens

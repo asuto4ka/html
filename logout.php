@@ -12,7 +12,13 @@
    
    session_start();
    include("checkUserSession.php");
-   session_destroy();
+   // Verify CSRF Token in GET
+   if($_GET['CSRFToken'] == $_SESSION["CSRFtoken"]){
+	   session_destroy();
+   }
+   
+   
+   
    header("Location: http://localhost/html/index.php");
    exit();
 ?>

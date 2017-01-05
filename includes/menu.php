@@ -11,12 +11,12 @@
 			  </a>
 			</div>
 			<div class="navbar-header">
-			  <a class="navbar-brand" href="changeOwnPassword.php">
+			  <a class="navbar-brand" href="changeOwnPassword.php?CSRFToken=<?php echo $_SESSION["CSRFtoken"];  ?>">
 				Change password
 			  </a>
 			</div>
 			<div class="navbar-header">
-			  <a class="navbar-brand" href="logout.php">
+			  <a class="navbar-brand" href="logout.php?CSRFToken=<?php echo $_SESSION["CSRFtoken"];  ?>">
 				Logout
 			  </a>
 			</div>

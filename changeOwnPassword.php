@@ -14,6 +14,7 @@
    session_start();
    include("checkUserSession.php");
    require('password.php');
+   include('functions.php');
    include("databaseConnection.php");
 ?>
 
@@ -30,40 +31,11 @@
    <body>  
 
       <?php include("includes/menu.php"); ?>
-
-      <div class="container">
-         <h1>STI Messenger</h1>
-         <h2><?php echo $_SESSION['userName']; ?>, you can change your password here !</h2>
-      </div>
-
-      <form method="post">  
-
-         <div class="container">
-            <div class="form-group">
-               <input type="password" name="oldPassword" id="oldPassword" placeholder="Old password"/>
-            </div>
-            <div class="form-group">
-               <input type="password" name="newPassword" id="newPassword" placeholder="New password"/>
-               <br>
-               <input type="password" name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm new password"/>
-            </div>
-         </div>
-
-         <br>
-
-         <div class="container">
-            <div class="form-group">
-               <input type="submit" class="btn" name="changePasswordBtn" value="Change my password">  
-            </div>
-         </div>
-
-      </form>
-
-      <?php
+	  <?php
          $changePasswordBtn = isset($_POST['changePasswordBtn']) ? $_POST['changePasswordBtn'] : NULL;
 
          // If changePasswordBtn was clicked 
-         if ($changePasswordBtn) {
+         if ($changePasswordBtn && $_POST['CSRFToken'] == $_SESSION["CSRFtoken"]) {
             $oldPassword = $newPassword = $confirmNewPassword = "";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -90,26 +62,57 @@
 
                         if ($oldPassword != $newPassword) {
 
-                           // Update password in DB
+                           // Update password in DB 
                            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-                           $sql = "UPDATE users SET user_pwd_hash = '$newPasswordHash' WHERE user_id = '$userId'";
-                           $result = $file_db->query($sql);
-                           echo "<h2>Password changed !</h2>";
+                           //
+						   updatePassword($newPasswordHash, $userId);
+                           header("Location: http://localhost/html/messages.php?msg=pwdChanged");
                         } else {
-                           echo "<h2>Your new password must be different than your old password !</h2>";
+						   echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your new password must be different than your old password !</div></div>";
                         }
                      } else {
-                        echo "<h2>Your confirmation password doesn't match your new password !</h2>";
+						echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your confirmation password doesn't match your new password !</div></div>";
                      }
                   } else {
-                     echo "<h2>Your password is wrong !</h2>";
+					 echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your password is wrong !</div></div>";
                   }
                } else {
-                  echo "<h2>Your new password must contain at least one caracter !</h2>";
+				  echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your new password must contain at least one caracter !</div></div>";
                }
             }
          }
-      ?>     
+      ?> 
+
+      <div class="container">
+         <h1>STI Messenger</h1>
+         <h2><?php echo $_SESSION['userName']; ?>, you can change your password here !</h2>
+      </div>
+
+      <form method="post">  
+
+         <div class="container">
+            <div class="form-group">
+               <input type="password" name="oldPassword" id="oldPassword" placeholder="Old password"/>
+            </div>
+            <div class="form-group">
+               <input type="password" name="newPassword" id="newPassword" placeholder="New password"/>
+               <br>
+               <input type="password" name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm new password"/>
+            </div>
+         </div>
+
+         <br>
+		<!--CSRF protection -->
+		<input type="hidden" name="CSRFToken"value="<?php echo $_SESSION["CSRFtoken"]; ?>">
+        <div class="container">
+            <div class="form-group">
+				<input type="submit" class="btn" name="changePasswordBtn" value="Change my password">  
+           </div>
+        </div>
+
+      </form>
+
+          
       <?php include("includes/footer.php"); ?>
    </body>
 </html>

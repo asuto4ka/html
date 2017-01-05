@@ -70,6 +70,20 @@
 			return $result['user_name'];
 	   } 
 	   
+	   /*
+	   
+	   */
+	   
+		function getUserRoleActive($userId){
+			include("databaseConnection.php");
+			$sql = "SELECT user_role, user_active FROM users WHERE user_id = :userId";
+			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$sth->execute(array(':userId' => $userId));
+			$result = $sth->fetch(PDO::FETCH_ASSOC);
+			$file_db = null;
+			return $result;
+	   }
+	   
 		/*
 		
 		
@@ -131,6 +145,55 @@
 			}
 			
 		}
+		
+		/*
+			met à jour le mot de passe utilisateur
+		
+		*/
+		
+		function updatePassword($newPassordHash, $userID){
+			include("databaseConnection.php");
+			$sql = "UPDATE users SET user_pwd_hash = :newPasswordHash WHERE user_id = :userId";
+			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			
+			// Pas besoin de htmlspecialchars étant donné que c'est un hash
+			$sth->execute(array(
+				':newPasswordHash' => $newPassordHash,
+				':userId' => $userID
+			));
+			
+			$file_db = null;
+			return;
+			
+		}
+		
+		/*
+		Récupère le destinataire du message (pour vérifier que c'est bien le destinataire qui supprime le message et pas quelqu'un d'autre)
+		
+		
+		*/
+		function getReceiverId($messageId){
+			include("databaseConnection.php");
+			$sql = "SELECT message_receiver_id FROM messages WHERE message_id = :messageId";
+			$sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			
+			if(is_numeric($messageId)){
+				$sth->execute(array(':messageId' => $messageId));
+				$result = $sth->fetch(PDO::FETCH_ASSOC);
+				print_r($result);
+				$file_db = null;
+				return $result;
+				//return $result->fetch();
+			}
+			else {
+				$file_db = null;
+				return false;
+			}
+		}
+		
+		
+		
+		
 
 	   /*
 		 Envoie un message
@@ -276,7 +339,7 @@
 		Créé un nouvel utilisateur
 		*/
 		function newUser($userName, $userPasswordHash, $role, $active, $deleted){
-			$file_db;
+			include("databaseConnection.php");
 			
 			$sql = "INSERT INTO users (user_name, user_pwd_hash, user_role, user_active, user_deleted) VALUES (:userName, :user_pwd_hash, :user_role, :user_active, :user_deleted)";
             $sth = $file_db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

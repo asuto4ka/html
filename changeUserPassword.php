@@ -16,6 +16,7 @@
    include("checkAdminSession.php");
    require('password.php');
    include("databaseConnection.php");
+   include("functions.php");
    // User that the admin wants to change password
    $userId = $_GET['userId'];
    $userName = $_GET['userName'];
@@ -38,6 +39,38 @@
 
    <body>  
        <?php include("includes/menu.php"); ?>
+	   
+	   <?php
+         $changePasswordBtn = isset($_POST['changePasswordBtn']) ? $_POST['changePasswordBtn'] : NULL;
+
+         // If changePasswordBtn was clicked 
+         if ($changePasswordBtn && $_POST['CSRFToken'] == $_SESSION["CSRFtoken"]) {
+            $newPassword = $confirmNewPassword = "";
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+               $newPassword = $_POST["newPassword"];
+               $confirmNewPassword = $_POST["confirmNewPassword"];
+
+               if ($newPassword != "") {
+
+                  // Check if confirmation new password is ok
+                  if ($newPassword == $confirmNewPassword) {
+
+                     // Update password in DB 
+					 //TODO
+                     $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+                     updatePassword($newPasswordHash, $userId);
+					 
+                     header("Location: http://localhost/html/admin.php?msg=pwdChanged");
+                  } else {
+					 echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Confirmation password doesn't match new password !</div></div>";
+                  }
+               } else {
+				  echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your new password must contain at least one caracter !</div></div>";
+               }
+            }
+         }
+      ?>
 
       <h1>STI Messenger</h1>
 
@@ -52,6 +85,8 @@
          </div>
 
          <br>
+		 <!--CSRF protection -->
+		<input type="hidden" name="CSRFToken"value="<?php echo $_SESSION["CSRFtoken"]; ?>">
 
          <div class="container">
             <input type="submit" class="btn" name="changePasswordBtn" value="Change the password">  
@@ -59,36 +94,7 @@
 
       </form>
 
-      <?php
-         $changePasswordBtn = isset($_POST['changePasswordBtn']) ? $_POST['changePasswordBtn'] : NULL;
-
-         // If changePasswordBtn was clicked 
-         if ($changePasswordBtn) {
-            $newPassword = $confirmNewPassword = "";
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-               $newPassword = $_POST["newPassword"];
-               $confirmNewPassword = $_POST["confirmNewPassword"];
-
-               if ($newPassword != "") {
-
-                  // Check if confirmation new password is ok
-                  if ($newPassword == $confirmNewPassword) {
-
-                     // Update password in DB
-                     $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-                     $sql = "UPDATE users SET user_pwd_hash = '$newPasswordHash' WHERE user_id = '$userId'";
-                     $result = $file_db->query($sql);
-                     echo "<h2>Password changed !</h2>";
-                  } else {
-                     echo "<h2>Confirmation password doesn't match new password !</h2>";
-                  }
-               } else {
-                  echo "<h2>Your new password must contain at least one caracter !</h2>";
-               }
-            }
-         }
-      ?>     
+           
       <?php include("includes/footer.php"); ?>
    </body>
 </html>

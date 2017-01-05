@@ -50,10 +50,10 @@
             global $file_db;
 
             // Get the user_role and the user_active
-            $sql = "SELECT user_role, user_active FROM users WHERE user_id = '$userId'";
-            $result = $file_db->query($sql);
-            $result->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $result->fetch();
+            //$sql = "SELECT user_role, user_active FROM users WHERE user_id = '$userId'";
+            //$result = $file_db->query($sql);
+            //$result->setFetchMode(PDO::FETCH_ASSOC);
+            //$result = $result->fetch();
 
             // Check if the user we want to delete is admin
             if ($result['user_role'] == 1) {
@@ -76,7 +76,7 @@
                $isDeletionOk = 1;
             }
 
-            if ($isDeletionOk == 1) {
+            if ($isDeletionOk == 1 && $_GET['CSRFToken'] == $_SESSION["CSRFtoken"]) {
                $sql = "UPDATE users SET user_deleted = '1' WHERE user_id = '$userId'";
                $result = $file_db->query($sql);
                echo "<h2>User removed successfully !</h2>";

@@ -29,8 +29,8 @@
        <?php
           include("includes/menu.php");
 
-	  
-          if (isset($_POST['list_deroulante'])) {
+		//CSRF protection
+          if (isset($_POST['list_deroulante']) && $_POST['CSRFToken'] == $_SESSION["CSRFtoken"]) {
                                       
 				$id = getUserId($_POST['list_deroulante']);				
 				$message = $_POST['form_message'];
@@ -91,6 +91,8 @@
             </div>
 
             <br>
+			<!--CSRF protection -->
+			<input type="hidden" name="CSRFToken"value="<?php echo $_SESSION["CSRFtoken"]; ?>">
 
             <div class="container">
                <input type="submit" class="btn" name="send" value="send">  

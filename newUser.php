@@ -26,46 +26,15 @@
    </head>
 
    <body>  
-       <?php include("includes/menu.php"); ?>	  
-
-      <div class="container">
-         <h1>STI Create a new user</h1>
-         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
-
-            <div class="form-group">
-               <!-- <label for="form_name">Name</label> <br/> -->
-               <input type="text" name="userName" id="form_name" placeholder="Username"/>
-               </br>
-               </br>
-               <!-- <label for="form_newPassword">Password</label> -->
-
-               <input type="password" name="userPassword" id="form_newPassword" placeholder="Password"/>
-               </br>
-               </br>
-               <!-- <label for="form_confirmNewPassword">Confirm Password</label><br/> -->
-               <input type="password" name="confirmationPassword" id="form_confirmNewPassword" placeholder="Confirm password"/>
-               </br>
-               </br>
-
-               Admin <Input type = 'Radio' Name = 'role' value = 'Admin'>
-               &nbsp;
-               User <Input type = 'Radio' Name = 'role' value = 'User'>
-
-            </div>
-            <br>
-            <div class="container">
-               <input type="submit" class="btn" name="createUserBtn" value="Create user">  
-            </div>
-         </form>
-      </div>
-
-      <?php
+       <?php include("includes/menu.php"); ?>	
+		<?php
          $createUserBtn = isset($_POST['createUserBtn']) ? $_POST['createUserBtn'] : NULL;
 
          if ($createUserBtn) {
             $userName = $userPassword = $confirmPassword = "";
 
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userName"]) && isset($_POST["userPassword"]) && isset($_POST['confirmationPassword']) && isset($_POST['role'])) {
+			// + csrf token check
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userName"]) && isset($_POST["userPassword"]) && isset($_POST['confirmationPassword']) && isset($_POST['role']) && $_POST['CSRFToken'] == $_SESSION["CSRFtoken"]) {
                $userName = $_POST["userName"];
                $userPassword = $_POST["userPassword"];
                $confirmationPassword = $_POST['confirmationPassword'];
@@ -99,7 +68,7 @@
 						
 						$result = newUser($userName, $userPasswordHash, $role, 1, 0);
 
-                        echo "<h2>New user created successfully !</h2>";
+                        //echo "<h2>New user created successfully !</h2>";
                         header("Location: http://localhost/html/admin.php?msg=created");
                      } else {
                         echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  Passwords don't match ! </div></div>";
@@ -114,6 +83,42 @@
 			}
          }
       ?>
+
+      <div class="container">
+         <h1>STI Create a new user</h1>
+         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"> 
+
+            <div class="form-group">
+               <!-- <label for="form_name">Name</label> <br/> -->
+               <input type="text" name="userName" id="form_name" placeholder="Username"/>
+               </br>
+               </br>
+               <!-- <label for="form_newPassword">Password</label> -->
+
+               <input type="password" name="userPassword" id="form_newPassword" placeholder="Password"/>
+               </br>
+               </br>
+               <!-- <label for="form_confirmNewPassword">Confirm Password</label><br/> -->
+               <input type="password" name="confirmationPassword" id="form_confirmNewPassword" placeholder="Confirm password"/>
+               </br>
+               </br>
+
+               Admin <Input type = 'Radio' Name = 'role' value = 'Admin'>
+               &nbsp;
+               User <Input type = 'Radio' Name = 'role' value = 'User'>
+
+            </div>
+            <br>
+			<!--CSRF protection -->
+			<input type="hidden" name="CSRFToken" value="<?php echo htmlspecialchars($_SESSION["CSRFtoken"]);?>">
+			
+            <div class="container">
+               <input type="submit" class="btn" name="createUserBtn" value="Create user">  
+            </div>
+         </form>
+      </div>
+
+      
       <?php include("includes/footer.php"); ?>
    </body>
 </html>

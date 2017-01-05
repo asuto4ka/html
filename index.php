@@ -75,15 +75,23 @@
                         // Check if password entered references the password hash in database
                         if (password_verify($userPwd, $user_pwd_hash)) {
 
-                           // User session creation
-                           $_SESSION['userName'] = $userName;
-                           $_SESSION['userId'] = $result['user_id'];
-                           $_SESSION['userRole'] = $result['user_role'];
-
-                           header('Location: http://localhost/html/home.php');
-                           exit();
+							// User session creation
+							$_SESSION['userName'] = $userName;
+							$_SESSION['userId'] = $result['user_id'];
+							$_SESSION['userRole'] = $result['user_role'];
+							
+							//TODO - create CSRF Token here
+							//
+							//
+							//
+							//
+							// make a random id then used to protect forms POST
+							$_SESSION["CSRFtoken"] = md5(uniqid(mt_rand(), true));
+							
+							header('Location: http://localhost/html/home.php');
+							exit();
                         } else {
-						   echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  Username and/or password entered are incorrect ! </div></div>";
+							echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  Username and/or password entered are incorrect ! </div></div>";
                         }
                      } else {
 						echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  <h2>Account desactivated, contact your administrator !</div></div>";

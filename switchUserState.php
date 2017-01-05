@@ -13,8 +13,10 @@
    include("checkAdminSession.php");
    include("databaseConnection.php");
    include("functions.php");
+   
+   
 
-   if (isset($_GET['user']) && !empty($_GET['user']) && is_numeric($_GET['user'])) {
+   if (isset($_GET['user']) && !empty($_GET['user']) && is_numeric($_GET['user']) && $_GET['CSRFToken'] == $_SESSION["CSRFtoken"]) {
       $userId = $_GET['user'];
       $userState = getUserState($userId);
       echo "<br/>[debug] user state for " . $userId . " = " . $userState;
