@@ -1,11 +1,11 @@
-<?php
+﻿<?php
    /*
      ---------------------------------------------------------------------------
      Projet      : STI Messenger
      Fichier     : newUser.php
-     Auteurs     : Thibault Schowing, S�bastien Henneberger
+     Auteurs     : Thibault Schowing, Sébastien Henneberger
      Date        : 12.10.2016
-     Description : Page permettant � un admin de cr�er un nouvel utilisateur.
+     Description : Page permettant à un admin de créer un nouvel utilisateur.
      ---------------------------------------------------------------------------
     */
 ?>
@@ -33,8 +33,8 @@
          if ($createUserBtn) {
             $userName = $userPassword = $confirmPassword = "";
 
-			// + csrf token check
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userName"]) && isset($_POST["userPassword"]) && isset($_POST['confirmationPassword']) && isset($_POST['role']) && $_POST['CSRFToken'] == $_SESSION["CSRFtoken"]) {
+			// vérif des données formulaire + csrf token check + captcha (variable "nobot")
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userName"]) && isset($_POST["userPassword"]) && isset($_POST['confirmationPassword']) && isset($_POST['role']) && isset($_POST['nobot']) && $_POST['CSRFToken'] == $_SESSION["CSRFtoken"]) {
                $userName = $_POST["userName"];
                $userPassword = $_POST["userPassword"];
                $confirmationPassword = $_POST['confirmationPassword'];
@@ -109,6 +109,7 @@
 
             </div>
             <br>
+			<input type="checkbox" name="nobot" required="true">Je confirme être un humain.
 			<!--CSRF protection -->
 			<input type="hidden" name="CSRFToken" value="<?php echo htmlspecialchars($_SESSION["CSRFtoken"]);?>">
 			
