@@ -1,59 +1,61 @@
 <?php
-   /*
-     ---------------------------------------------------------------------------
-     Projet      : STI Messenger
-     Fichier     : switchUserRole.php
-     Auteurs     : Thibault Schowing, Sébastien Henneberger
-     Date        : 12.10.2016
-     Description : Permet de changer le rôle d'un utilisateur.
-     ---------------------------------------------------------------------------
-    */
+
+/*
+  ---------------------------------------------------------------------------
+  Projet      : STI Messenger
+  Fichier     : switchUserRole.php
+  Auteurs     : Thibault Schowing, Sébastien Henneberger
+  Date        : 12.10.2016
+  Description : Permet de changer le rôle d'un utilisateur.
+  ---------------------------------------------------------------------------
+ */
 ?>
 
 <?php
-   session_start();
-   include("checkAdminSession.php");
-   include("databaseConnection.php");
-   include("functions.php");
 
-   if (isset($_GET['user']) && !empty($_GET['user']) && is_numeric($_GET['user']) && $_GET['CSRFToken'] == $_SESSION["CSRFtoken"]) {
+session_start();
+include("checkAdminSession.php");
+include("databaseConnection.php");
+include("functions.php");
 
-      $userId = $_GET['user'];
-      if (!verifyId($userId)) {
-         //header("Location: http://localhost/admin.php?msg=noUser");
-         //exit();
-         echo "user not verified";
-      }
+if (isset($_GET['user']) && !empty($_GET['user']) && is_numeric($_GET['user']) && $_GET['CSRFToken'] == $_SESSION["CSRFtoken"]) {
 
-      $nbAdmins = getNumberOfAdmin();
-      $userRole = getUserRole($userId);
-      $currentUserId = $_SESSION['userId'];
+    $userId = $_GET['user'];
+    if (!verifyId($userId)) {
+        //header("Location: http://localhost/admin.php?msg=noUser");
+        //exit();
+        echo "user not verified";
+    }
 
-      // Si c'est un admin, on ne change pas son role s'il est le seul
-      if ($userRole == 1 && $nbAdmins <= 1) {
-         header("Location: http://localhost/html/admin.php?msg=oneAdmin");
-         exit();
-      }
+    $nbAdmins = getNumberOfAdmin();
+    $userRole = getUserRole($userId);
+    $currentUserId = $_SESSION['userId'];
 
-      // Il doit y avoir au moins un admin, et on ne peut pas changer son propre status (admin/user)(1/0)
-      // si true, on inverse 0 et 1 ou vice versa
-      if ($userId != $currentUserId) {
+    // Si c'est un admin, on ne change pas son role s'il est le seul
+    if ($userRole == 1 && $nbAdmins <= 1) {
+        header("Location: http://localhost/html/admin.php?msg=oneAdmin");
+        exit();
+    }
 
-         if ($userRole == 1) {
+    // Il doit y avoir au moins un admin, et on ne peut pas changer son propre status (admin/user)(1/0)
+    // si true, on inverse 0 et 1 ou vice versa
+    if ($userId != $currentUserId) {
+
+        if ($userRole == 1) {
             setUserRole($userId, 0);
             header("Location: http://localhost/html/admin.php?msg=ok");
             exit();
-         } else {
+        } else {
             setUserRole($userId, 1);
             header("Location: http://localhost/html/admin.php?msg=ok");
             exit();
-         }
-      } else {
-         header("Location: http://localhost/html/admin.php?msg=self");
-         exit();
-      }
-   } else {
-      header("Location: http://localhost/html/admin.php?msg=noUser");
-      exit();
-   }
+        }
+    } else {
+        header("Location: http://localhost/html/admin.php?msg=self");
+        exit();
+    }
+} else {
+    header("Location: http://localhost/html/admin.php?msg=noUser");
+    exit();
+}
 ?>
