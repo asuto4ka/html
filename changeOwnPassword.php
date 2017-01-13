@@ -43,7 +43,7 @@ include("databaseConnection.php");
                 $newPassword = $_POST["newPassword"];
                 $confirmNewPassword = $_POST["confirmNewPassword"];
 
-                if ($newPassword != "") {
+                if (strlen($newPassword) >= 8) {
 
                     // Check if old password hash and password hash which is stocked in DB are identical
                     $userId = $_SESSION['userId'];
@@ -77,7 +77,7 @@ include("databaseConnection.php");
                         echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your password is wrong !</div></div>";
                     }
                 } else {
-                    echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your new password must contain at least one caracter !</div></div>";
+                    echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your new password must contain at least 8 caracters !</div></div>";
                 }
             }
         }

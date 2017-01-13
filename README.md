@@ -16,6 +16,8 @@
 
 4. You can now go to `localhost/index.php` to enjoy this amazing website.
 
+5. To run on W/M/LAMP change the information in the file "databaseConnection.php"
+
 ## User manual
 
 1. Login
@@ -83,6 +85,10 @@ All pages are the same for the admin, except the <i>Administration page</i> that
 # Web site security remarks
 
 For all of the security features we suppose that the site is running under an SSL connection.
+Password policy: we should force the user to use alphanumerical and special caracters.
+Anti CSRF: only a beggining, not realy secure -> lack of time
+Redirection to 404 should be done if access id denied AND if page doesn't exist to avoid information disclosure.
+
 
 ## Sanitizing user inputs
 

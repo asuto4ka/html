@@ -46,14 +46,14 @@ include("password.php");
                 // Check if user exists
                 $userId = getUserId($_POST["userName"]);
 
-                echo "<br/>[debug] userId verify: " . $userId;
+                // echo "<br/>[debug] userId verify: " . $userId;
                 if ($userId != false) {
 
                     echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong> This username is not available ! Choose another one ! </div></div>";
                 } else {
 
                     // Check password length
-                    if ($userPassword != "") {
+                    if (strlen($userPassword) >= 8) {
 
                         // Check if password and confirmation password are identical
                         if ($userPassword == $confirmationPassword) {
@@ -74,7 +74,7 @@ include("password.php");
                             echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  Passwords don't match ! </div></div>";
                         }
                     } else {
-                        echo "<h2>Password must contain at least one caracter !</h2>";
+						echo "<div class=\"container\"><div class=\"alert alert-warning\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Krap !</strong>  Password must contain at least 8 caracters ! </div></div>";
                     }
                 }
             } else {
@@ -104,14 +104,15 @@ include("password.php");
 
                     Admin <Input type = 'Radio' Name = 'role' value = 'Admin'>
                     &nbsp;
-                    User <Input type = 'Radio' Name = 'role' value = 'User'>
+                    User <Input type = 'Radio' Name = 'role' value = 'User' checked="true">
 
                 </div>
-                <br>
+                <br/>
                 <input type="checkbox" name="nobot" required="true">Je confirme être un humain.
+				<br/>
                 <!--CSRF protection -->
                 <input type="hidden" name="CSRFToken" value="<?php echo htmlspecialchars($_SESSION["CSRFtoken"]); ?>">
-
+				<br/>
                 <div class="container">
                     <input type="submit" class="btn" name="createUserBtn" value="Create user">  
                 </div>

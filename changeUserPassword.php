@@ -51,13 +51,12 @@ $userName = $_GET['userName'];
                 $newPassword = $_POST["newPassword"];
                 $confirmNewPassword = $_POST["confirmNewPassword"];
 
-                if ($newPassword != "") {
+                if (strlen($newPassword) >= 8) {
 
                     // Check if confirmation new password is ok
                     if ($newPassword == $confirmNewPassword) {
 
                         // Update password in DB 
-                        //TODO
                         $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
                         updatePassword($newPasswordHash, $userId);
 
@@ -66,7 +65,7 @@ $userName = $_GET['userName'];
                         echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Confirmation password doesn't match new password !</div></div>";
                     }
                 } else {
-                    echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your new password must contain at least one caracter !</div></div>";
+                    echo "<div class=\"container\"><div class=\"alert alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Error!</strong> Your new password must contain at least 8 caracters !</div></div>";
                 }
             }
         }
