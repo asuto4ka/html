@@ -15,6 +15,7 @@ session_start();
 include("checkUserSession.php");
 // Verify CSRF Token in GET
 if ($_GET['CSRFToken'] == $_SESSION["CSRFtoken"]) {
+	$_SESSION = array();
     session_destroy();
 }
 

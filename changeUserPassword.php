@@ -38,12 +38,13 @@ $userName = $_GET['userName'];
     </head>
 
     <body>  
-        <?php include("includes/menu.php"); ?>
-
-        <?php
+        <?php include("includes/menu.php"); 
+		
         $changePasswordBtn = isset($_POST['changePasswordBtn']) ? $_POST['changePasswordBtn'] : NULL;
 
         // If changePasswordBtn was clicked 
+		
+		
         if ($changePasswordBtn && $_POST['CSRFToken'] == $_SESSION["CSRFtoken"]) {
             $newPassword = $confirmNewPassword = "";
 
@@ -85,6 +86,9 @@ $userName = $_GET['userName'];
 
             <br>
             <!--CSRF protection -->
+			<?php 
+				//Reload CSRF
+				$_SESSION["CSRFtoken"] = md5(uniqid(mt_rand(), true)); ?>
             <input type="hidden" name="CSRFToken"value="<?php echo $_SESSION["CSRFtoken"]; ?>">
 
             <div class="container">

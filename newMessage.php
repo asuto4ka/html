@@ -91,6 +91,9 @@ include("functions.php");
 
                 <br>
                 <!--CSRF protection -->
+				<?php 
+				//Reload CSRF
+				$_SESSION["CSRFtoken"] = md5(uniqid(mt_rand(), true)); ?>
                 <input type="hidden" name="CSRFToken"value="<?php echo $_SESSION["CSRFtoken"]; ?>">
 
                 <div class="container">
